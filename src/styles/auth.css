@@ -599,7 +599,6 @@
 .uauth-profile-btn__chevron--open {
   transform: rotate(180deg);
 }
-.uauth-profile-menu {
 .uauth-org {
   display: flex;
   flex-direction: column;
