@@ -461,6 +461,7 @@
 .uauth-back-link__icon {
   width: 14px;
   height: 14px;
+}
 .uauth-header__anchor {
   position: relative;
   display: inline-flex;
@@ -556,7 +557,6 @@
 .uauth-menu__item--danger .uauth-menu__item-icon {
   color: var(--color-destructive);
 }
-.uauth-notif {
 .uauth-profile-btn {
   display: flex;
   align-items: center;
