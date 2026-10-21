@@ -20,6 +20,7 @@ export const AUTH_KEYS = {
     confirmPasswordPlaceholder: 'auth.placeholders.confirmPassword',
     acceptTerms: 'auth.register.acceptTerms',
     termsOfService: 'auth.register.termsOfService',
+    termsAnd: 'auth.register.termsAnd',
     privacyPolicy: 'auth.register.privacyPolicy',
     submit: 'auth.register.submit',
     submitting: 'auth.register.submitting',

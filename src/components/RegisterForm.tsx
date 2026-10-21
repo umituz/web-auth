@@ -30,6 +30,7 @@ const KEYS = {
   submitting: 'auth.register.submitting',
   acceptTerms: 'auth.register.acceptTerms',
   termsOfService: 'auth.register.termsOfService',
+  termsAnd: 'auth.register.termsAnd',
   privacyPolicy: 'auth.register.privacyPolicy',
   haveAccount: 'auth.register.haveAccount',
   signIn: 'auth.register.signIn',
@@ -223,7 +224,7 @@ export const RegisterForm = ({
             <a href="/terms" className="uauth-text-link">
               {translate(KEYS.termsOfService)}
             </a>{' '}
-            and{' '}
+            {translate(KEYS.termsAnd)}{' '}
             <a href="/privacy" className="uauth-text-link">
               {translate(KEYS.privacyPolicy)}
             </a>
