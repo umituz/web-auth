@@ -6,6 +6,7 @@ import { Button, Checkbox, Input } from "@umituz/web-design-system/atoms";
 import { cn } from "@umituz/web-design-system/utils/cn";
 import type { RegisterFormProps, RegisterData, Translate } from "../types/auth";
 import { validateRegister } from "../utils/auth";
+import { authErrorMessage } from "../utils/errors";
 import { AUTH_KEYS } from "../utils/i18nKeys";
 import { AUTH_VALIDATION_KEYS } from "../utils/validationKeys";
 import {
@@ -100,7 +101,7 @@ export const RegisterForm = ({
         await onRegisterSuccess?.(user);
         navigate(config.afterLoginRoute);
       } catch (err) {
-        const message = err instanceof Error ? err.message : KEYS.invalidData;
+        const message = authErrorMessage(err, KEYS.invalidData);
         setError(message);
         onRegisterError?.(message);
       } finally {

@@ -6,6 +6,7 @@ import { Button, Input } from "@umituz/web-design-system/atoms";
 import { cn } from "@umituz/web-design-system/utils/cn";
 import type { ResetPasswordFormProps, Translate } from "../types/auth";
 import { validateResetPassword } from "../utils/auth";
+import { authErrorMessage } from "../utils/errors";
 import { AUTH_KEYS } from "../utils/i18nKeys";
 import { AUTH_VALIDATION_KEYS } from "../utils/validationKeys";
 import {
@@ -66,7 +67,7 @@ export const ResetPasswordForm = ({
       setConfirmPassword("");
       setSuccess(true);
     } catch (err) {
-      const message = err instanceof Error ? err.message : KEYS.resetFailed;
+      const message = authErrorMessage(err, KEYS.resetFailed);
       setError(message);
       onError?.(message);
     } finally {

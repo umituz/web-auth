@@ -5,6 +5,7 @@ import { ArrowLeft, Loader2, CheckCircle2, Check } from "lucide-react";
 import { Button } from "@umituz/web-design-system/atoms";
 import type { ForgotPasswordFormProps, Translate } from "../types/auth";
 import { validateForgotPassword } from "../utils/auth";
+import { authErrorMessage } from "../utils/errors";
 import { AUTH_KEYS } from "../utils/i18nKeys";
 import { AUTH_VALIDATION_KEYS } from "../utils/validationKeys";
 import { AuthErrorBanner, EmailInput } from "./shared";
@@ -59,7 +60,7 @@ export const ForgotPasswordForm = ({
       await onSuccess?.({ email });
       setSuccess(true);
     } catch (err) {
-      const message = err instanceof Error ? err.message : KEYS.sendResetFailed;
+      const message = authErrorMessage(err, KEYS.sendResetFailed);
       setError(message);
       onError?.(message);
     } finally {

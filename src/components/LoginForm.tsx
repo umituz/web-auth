@@ -4,6 +4,7 @@ import { useT } from "@umituz/web-localization/react";
 import { Button, Checkbox } from "@umituz/web-design-system/atoms";
 import { Loader2 } from "lucide-react";
 import { validateLogin } from "../utils/auth";
+import { authErrorMessage } from "../utils/errors";
 import type {
   LoginFormProps,
   LoginCredentials,
@@ -97,7 +98,10 @@ export const LoginForm = ({
         await onLoginSuccess?.(user);
         navigate(config.afterLoginRoute);
       } catch (err) {
-        const message = err instanceof Error ? err.message : KEYS.loginFailed;
+        const message = authErrorMessage(err, KEYS.loginFailed, {
+          401: KEYS.invalidCredentials,
+          403: KEYS.invalidCredentials,
+        });
         setError(message);
         onLoginError?.(message);
       } finally {
