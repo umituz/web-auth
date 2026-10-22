@@ -1,7 +1,7 @@
 {
   "name": "@umituz/web-auth",
   "version": "1.0.4",
-  "description": "Frontend auth module for the fleet — AuthLayout, Login/Register/Forgot/Reset forms, SessionProvider with an AuthAdapter seam, org switcher, demo login; uauth-* stylesheet on design-system tokens",
+  "description": "Frontend auth module for the fleet — AuthLayout, Login/Register/Forgot/Reset forms, SessionProvider with an AuthAdapter seam, org switcher, demo login, ready-made better-auth client adapter + form actions; uauth-* stylesheet on design-system tokens",
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -15,6 +15,7 @@
     "./utils": "./src/utils/index.ts",
     "./types": "./src/types/index.ts",
     "./session": "./src/session/index.ts",
+    "./better-auth": "./src/better-auth/index.ts",
     "./styles.css": "./src/styles/auth.css",
     "./package.json": "./package.json"
   },
@@ -34,9 +35,15 @@
     "version:major": "npm version major -m 'chore: release v%s'"
   },
   "peerDependencies": {
+    "better-auth": "^1.7.0",
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0",
     "react-router-dom": "^6.0.0 || ^7.0.0"
+  },
+  "peerDependenciesMeta": {
+    "better-auth": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@umituz/web-design-system": "^4.8.1",
@@ -49,6 +56,7 @@
     "@types/react-dom": "^19.2.3",
     "@typescript-eslint/eslint-plugin": "^8.57.2",
     "@typescript-eslint/parser": "^8.57.2",
+    "better-auth": "^1.7.12",
     "eslint": "^10.0.2",
     "react-router-dom": "^7.13.1",
     "typescript": "^5.9.3",

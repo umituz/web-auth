@@ -17,6 +17,7 @@ export const AUTH_VALIDATION_KEYS = {
   passwordTooShort: 'auth.validation.passwordTooShort',
   passwordsDoNotMatch: 'auth.validation.passwordsDoNotMatch',
   nameRequired: 'auth.validation.nameRequired',
+  emailTaken: 'auth.validation.emailTaken',
   invalidResetToken: 'auth.validation.invalidResetToken',
 } as const;
 

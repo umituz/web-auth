@@ -18,6 +18,7 @@ Source-shipped (no build step). TypeScript + React 18/19, styling via `uauth-*` 
 | `./utils` | Validators (`isValidEmail`, `validateLogin`, …), password strength, email masking, `generateResetToken`, i18n/validation key catalogs |
 | `./types` | All public types (`User`, `LoginCredentials`, `RegisterData`, form props, `AuthConfig`, …) |
 | `./session` | `SessionProvider`, `useSession`, `AuthAdapter`/`SessionUser` types, `createInMemoryAuthAdapter`, `DemoLogin`, `OrgSwitcher` |
+| `./better-auth` | `betterAuthAdapter({ role?, baseURL? })`, `betterAuthRegister`, `betterAuthForgotPassword`, `betterAuthResetPassword` — ready-made better-auth client wiring for the `AuthAdapter` seam and form `on*Attempt` props (better-auth is an optional peer) |
 | `./styles.css` | The stylesheet (import once, after the design-system stylesheet) |
 
 ## Quickstart
