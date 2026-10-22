@@ -1,6 +1,6 @@
 {
   "name": "@umituz/web-auth",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Frontend auth module for the fleet — AuthLayout, Login/Register/Forgot/Reset forms, SessionProvider with an AuthAdapter seam, org switcher, demo login; uauth-* stylesheet on design-system tokens",
   "type": "module",
   "main": "./src/index.ts",
