@@ -222,11 +222,11 @@ export const RegisterForm = ({
           />
           <span className="uauth-check-label__text">
             {translate(KEYS.acceptTerms)}{' '}
-            <a href="/terms" className="uauth-text-link">
+            <a href={config.termsRoute} className="uauth-text-link">
               {translate(KEYS.termsOfService)}
             </a>{' '}
             {translate(KEYS.termsAnd)}{' '}
-            <a href="/privacy" className="uauth-text-link">
+            <a href={config.privacyRoute} className="uauth-text-link">
               {translate(KEYS.privacyPolicy)}
             </a>
           </span>

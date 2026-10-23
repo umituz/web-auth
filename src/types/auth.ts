@@ -155,6 +155,8 @@ export interface AuthConfig {
   registerRoute: string;
   /** Forgot password route */
   forgotPasswordRoute?: string;
+  termsRoute: string;
+  privacyRoute: string;
   /** Route after successful login */
   afterLoginRoute: string;
   /** Route after logout */

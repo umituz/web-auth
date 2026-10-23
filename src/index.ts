@@ -4,6 +4,10 @@ export {
   RegisterForm,
   ForgotPasswordForm,
   ResetPasswordForm,
+  LegalPage,
+  type LegalDoc,
+  type LegalSection,
+  type LegalPageProps,
 } from "./components";
 
 export { useAuth, type AuthProvider } from "./hooks";
