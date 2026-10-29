@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { useT } from "@umituz/web-localization/react";
 import { Loader2, CheckCircle2 } from "lucide-react";
 import { Button, Input } from "@umituz/web-design-system/atoms";

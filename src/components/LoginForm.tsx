@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { useT } from "@umituz/web-localization/react";
 import { Button, Checkbox } from "@umituz/web-design-system/atoms";
 import { Loader2 } from "lucide-react";

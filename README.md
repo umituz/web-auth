@@ -25,7 +25,7 @@ Source-shipped (no build step). TypeScript + React 18/19, styling via `uauth-*` 
 
 ```bash
 npm install @umituz/web-auth
-# peers: react, react-dom, react-router-dom
+# peers: react, react-dom, react-router ^7 (core package — optional)
 ```
 
 1. Import styles once, after the design-system stylesheet:
@@ -79,7 +79,7 @@ multi-tenant demo flows.
 
 ## Peers
 
-`react` and `react-dom` `^18 || ^19`, `react-router-dom` `^6 || ^7`.
+`react` and `react-dom` `^18 || ^19`, `react-router` `^7` (the core package, per the fleet's core-only router rule — `react-router-dom` v7 is its re-export shim and also satisfies the import). Optional peer: only the form components navigate; `./session`, `./hooks`, `./utils` and `./types` work in routerless hosts.
 
 ## Development
 
