@@ -34,6 +34,7 @@ export const OrgSwitcher = ({
   if (tenants.length === 0) return null;
 
   const active = tenants.find((tenant) => tenant.id === activeTenantId) ?? tenants[0];
+  if (!active) return null;
 
   return (
     <div className={cn("uauth-header__anchor", className)}>
