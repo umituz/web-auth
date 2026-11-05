@@ -98,8 +98,10 @@ export function getUserInitials(user: User | null): string | null {
   const name = user.name || user.email || "";
   if (!name) return null;
   const parts = name.trim().split(" ");
-  if (parts.length >= 2 && parts[0] && parts[parts.length - 1]) {
-    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  const first = parts[0];
+  const last = parts[parts.length - 1];
+  if (parts.length >= 2 && first && last) {
+    return (first[0] + last[0]).toUpperCase();
   }
   return name.slice(0, 2).toUpperCase();
 }
