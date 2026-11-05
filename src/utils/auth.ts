@@ -101,7 +101,7 @@ export function getUserInitials(user: User | null): string | null {
   const first = parts[0];
   const last = parts[parts.length - 1];
   if (parts.length >= 2 && first && last) {
-    return (first[0] + last[0]).toUpperCase();
+    return (first.charAt(0) + last.charAt(0)).toUpperCase();
   }
   return name.slice(0, 2).toUpperCase();
 }
@@ -125,7 +125,7 @@ export function formatUserCreatedAt(
 export function maskEmail(email: string): string | null {
   const [local, domain] = email.split("@");
   if (!local || !domain) return null;
-  const maskedLocal = local[0] + "***";
+  const maskedLocal = local.charAt(0) + "***";
   return `${maskedLocal}@${domain}`;
 }
 
