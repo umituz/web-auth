@@ -14,6 +14,8 @@ export {
   calculatePasswordStrength,
   getPasswordStrengthBand,
   sanitizeInput,
+  resolveHomeRoute,
+  groupDemoUsers,
   type ValidationResult,
   type PasswordStrengthBand,
 } from "./auth";

@@ -71,6 +71,43 @@ npm install @umituz/web-auth
 (`login`/`register`/`forgotPassword`/`resetPassword`); `DemoLogin` and `OrgSwitcher` cover
 multi-tenant demo flows.
 
+### Magic-link + demo-entry pages
+
+Passwordless hosts configure the adapter seam and render whole pages from the package —
+no local page code beyond config:
+
+```ts
+import type { AuthAdapter } from "@umituz/web-auth/session";
+
+export const authAdapter: AuthAdapter = {
+  login, logout, current,
+  requestMagicLink: (email) => apiFetch("/api/auth/magic-link", { method: "POST", json: { email } }),
+  verifyToken: (token) => apiFetch("/api/auth/verify", { method: "POST", json: { token } }),
+  listDemoUsers: () => apiFetch("/api/users"),
+  demoLogin: (userId) => apiFetch("/api/auth/demo", { method: "POST", json: { userId } }),
+};
+```
+
+```tsx
+import { MagicLinkLoginPage, MagicLinkVerifyPage } from "@umituz/web-auth";
+
+const authConfig: AuthConfig = {
+  /* brand + routes */
+  afterLoginRoute: "/dashboard",
+  roleHomeRoutes: { creator: "/creator", "brand-client": "/portal" },
+  demoGroups: [
+    { id: "agency", title: "Agency team", roles: ["owner", "admin"], roleLabels: { owner: "Owner" } },
+    { id: "creators", title: "Creator studio", roles: ["creator"] },
+  ],
+};
+
+<Route path="/auth/verify" element={<MagicLinkVerifyPage config={authConfig} />} />
+{/* anywhere anonymous: */} <MagicLinkLoginPage config={authConfig} />
+```
+
+`MagicLinkForm` and `DemoUserPicker` are also exported separately for custom compositions.
+Post-login routing goes through `roleHomeRoutes` (fallback `afterLoginRoute`).
+
 ## Styles
 
 - Class prefix `uauth-*`, spacing scale declared as `--uauth-space-1…8` (4–40px).

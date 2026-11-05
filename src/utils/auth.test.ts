@@ -3,6 +3,8 @@ import { describe, it, expect } from "vitest";
 import {
   isValidEmail,
   isValidPassword,
+  resolveHomeRoute,
+  groupDemoUsers,
   validateLogin,
   validateRegister,
   validateResetPassword,
@@ -181,5 +183,52 @@ describe("generateResetToken", () => {
 
   it("produces different tokens on each call", () => {
     expect(generateResetToken()).not.toBe(generateResetToken());
+  });
+});
+
+describe('resolveHomeRoute', () => {
+  const config = {
+    brandName: 'Test',
+    loginRoute: '/login',
+    registerRoute: '/register',
+    termsRoute: '/terms',
+    privacyRoute: '/privacy',
+    afterLoginRoute: '/app',
+    afterLogoutRoute: '/login',
+    roleHomeRoutes: { creator: '/studio', 'brand-client': '/portal' },
+  };
+
+  it('prefers the role route when configured', () => {
+    expect(resolveHomeRoute(config, 'creator')).toBe('/studio');
+    expect(resolveHomeRoute(config, 'brand-client')).toBe('/portal');
+  });
+
+  it('falls back to afterLoginRoute for unmapped roles', () => {
+    expect(resolveHomeRoute(config, 'admin')).toBe('/app');
+  });
+});
+
+describe('groupDemoUsers', () => {
+  const users = [
+    { id: '1', name: 'A', role: 'owner' },
+    { id: '2', name: 'B', role: 'creator' },
+    { id: '3', name: 'C', role: 'brand-client' },
+    { id: '4', name: 'D', role: 'creator' },
+  ];
+  const groups = [
+    { id: 'agency', title: 'Agency', roles: ['owner'] },
+    { id: 'creators', title: 'Creators', roles: ['creator'] },
+    { id: 'empty', title: 'Empty', roles: ['analyst'] },
+  ];
+
+  it('buckets users by role and drops empty groups', () => {
+    const result = groupDemoUsers(users, groups);
+    expect(result.map((g) => g.id)).toEqual(['agency', 'creators']);
+    expect(result[1]?.users.map((u) => u.id)).toEqual(['2', '4']);
+  });
+
+  it('keeps group metadata alongside the bucketed users', () => {
+    const [first] = groupDemoUsers(users, groups);
+    expect(first).toMatchObject({ id: 'agency', title: 'Agency', users: [{ id: '1', name: 'A', role: 'owner' }] });
   });
 });

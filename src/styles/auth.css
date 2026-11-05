@@ -681,3 +681,61 @@
 .uauth-brand-logo {
   flex-shrink: 0;
 }
+.uauth-magic-form {
+  display: flex;
+  gap: var(--uauth-space-2);
+}
+.uauth-magic-form > :first-child {
+  flex: 1;
+}
+.uauth-magic-result {
+  display: flex;
+  flex-direction: column;
+  gap: var(--uauth-space-2);
+  align-items: flex-start;
+  padding: var(--uauth-space-3);
+  border-radius: 10px;
+  background: var(--color-primary-soft);
+}
+.uauth-magic-result__note {
+  margin: 0;
+  font-size: var(--uauth-font-size-sm);
+  color: var(--color-primary);
+}
+.uauth-demo-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--uauth-space-2);
+}
+.uauth-demo-title {
+  margin: 0;
+  font-size: var(--uauth-font-size-xs);
+  font-weight: var(--font-weight-semibold, 600);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-muted-foreground);
+}
+.uauth-demo-users {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.uauth-demo-user {
+  justify-content: flex-start !important;
+  gap: var(--uauth-space-3);
+  width: 100%;
+}
+.uauth-demo-user-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  min-width: 0;
+}
+.uauth-demo-user-name {
+  font-size: 13px;
+}
+.uauth-demo-user-meta {
+  font-size: var(--uauth-font-size-xs);
+  opacity: 0.65;
+}

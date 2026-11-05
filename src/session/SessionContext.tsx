@@ -10,7 +10,9 @@ import {
 } from "react";
 import type {
   AuthAdapter,
+  DemoUser,
   LoginCredentials,
+  MagicLinkResult,
   SessionStatus,
   SessionUser,
   Tenant,
@@ -29,6 +31,9 @@ interface SessionContextValue {
   login: (credentials: LoginCredentials) => Promise<SessionUser>;
   logout: () => Promise<void>;
   demoLogin: (userId: string) => Promise<SessionUser>;
+  requestMagicLink: (email: string) => Promise<MagicLinkResult>;
+  verifyToken: (token: string) => Promise<SessionUser>;
+  listDemoUsers: () => Promise<DemoUser[]>;
   switchTenant: (tenantId: string) => void;
 }
 
@@ -114,6 +119,36 @@ export const SessionProvider = ({ adapter, children }: SessionProviderProps) => 
     setActiveTenantId(tenantId);
   }, []);
 
+  const requestMagicLink = useCallback(
+    async (email: string) => {
+      if (!adapter.requestMagicLink) {
+        throw new Error("AuthAdapter does not support requestMagicLink");
+      }
+      return adapter.requestMagicLink(email);
+    },
+    [adapter],
+  );
+
+  const verifyToken = useCallback(
+    async (token: string) => {
+      if (!adapter.verifyToken) {
+        throw new Error("AuthAdapter does not support verifyToken");
+      }
+      const next = await adapter.verifyToken(token);
+      setUser(next);
+      setStatus("authenticated");
+      return next;
+    },
+    [adapter],
+  );
+
+  const listDemoUsers = useCallback(async () => {
+    if (!adapter.listDemoUsers) {
+      throw new Error("AuthAdapter does not support listDemoUsers");
+    }
+    return adapter.listDemoUsers();
+  }, [adapter]);
+
   const value = useMemo<SessionContextValue>(
     () => ({
       user,
@@ -123,9 +158,24 @@ export const SessionProvider = ({ adapter, children }: SessionProviderProps) => 
       login,
       logout,
       demoLogin,
+      requestMagicLink,
+      verifyToken,
+      listDemoUsers,
       switchTenant,
     }),
-    [user, tenants, activeTenantId, status, login, logout, demoLogin, switchTenant],
+    [
+      user,
+      tenants,
+      activeTenantId,
+      status,
+      login,
+      logout,
+      demoLogin,
+      requestMagicLink,
+      verifyToken,
+      listDemoUsers,
+      switchTenant,
+    ],
   );
 
   return (

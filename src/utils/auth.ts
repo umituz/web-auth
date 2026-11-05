@@ -1,5 +1,6 @@
 
-import type { LoginCredentials, RegisterData, User } from "../types/auth";
+import type { AuthConfig, DemoUserGroup, LoginCredentials, RegisterData, User } from "../types/auth";
+import type { DemoUser } from "../session/types";
 import { AUTH_VALIDATION_KEYS } from './validationKeys';
 
 export { generateResetToken } from './secureToken';
@@ -155,4 +156,17 @@ export function getPasswordStrengthBand(password: string): PasswordStrengthBand 
 
 export function sanitizeInput(input: string, maxLength: number = 1000): string {
   return input.trim().slice(0, maxLength);
+}
+
+export function resolveHomeRoute(config: AuthConfig, role: string): string {
+  return config.roleHomeRoutes?.[role] ?? config.afterLoginRoute;
+}
+
+export function groupDemoUsers(
+  users: DemoUser[],
+  groups: DemoUserGroup[],
+): Array<DemoUserGroup & { users: DemoUser[] }> {
+  return groups
+    .map((group) => ({ ...group, users: users.filter((user) => group.roles.includes(user.role)) }))
+    .filter((group) => group.users.length > 0);
 }

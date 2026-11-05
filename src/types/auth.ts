@@ -1,5 +1,6 @@
 
 import type { ComponentType, ReactElement } from "react";
+import type { DemoUser, MagicLinkResult, SessionUser } from "../session/types";
 
 export type Translate = (key: string, params?: Record<string, unknown>) => string;
 
@@ -85,6 +86,10 @@ export interface AuthConfig {
   requireEmailVerification?: boolean;
   steps?: AuthStep[];
   metadata?: Record<string, unknown>;
+  roleHomeRoutes?: Record<string, string>;
+  demoGroups?: DemoUserGroup[];
+  magicLinkDemoNote?: string;
+  magicLinkSentNote?: string;
 }
 
 export interface SocialProvider {
@@ -93,6 +98,13 @@ export interface SocialProvider {
   icon: string;
   color?: string;
   scopes?: string[];
+}
+
+export interface DemoUserGroup {
+  id: string;
+  title: string;
+  roles: string[];
+  roleLabels?: Record<string, string>;
 }
 
 export interface AuthLayoutProps {
@@ -145,4 +157,33 @@ export interface ResetPasswordFormProps {
   token: string;
   onSuccess?: (data: { token: string; password: string }) => void | Promise<void>;
   onError?: (error: string) => void;
+}
+
+export interface MagicLinkFormProps {
+  config: AuthConfig;
+  onRequestLink?: (email: string) => Promise<MagicLinkResult>;
+  onLinkSent?: (result: MagicLinkResult) => void | Promise<void>;
+  translate?: Translate;
+  disabled?: boolean;
+}
+
+export interface DemoUserPickerProps {
+  users: DemoUser[];
+  groups: DemoUserGroup[];
+  onPick: (userId: string) => void | Promise<void>;
+}
+
+export interface MagicLinkLoginPageProps {
+  config: AuthConfig;
+  title?: string;
+  subtitle?: string;
+  showDemoPicker?: boolean;
+  onLogin?: (user: SessionUser) => void | Promise<void>;
+  translate?: Translate;
+}
+
+export interface MagicLinkVerifyPageProps {
+  config: AuthConfig;
+  onVerified?: (user: SessionUser) => void | Promise<void>;
+  translate?: Translate;
 }

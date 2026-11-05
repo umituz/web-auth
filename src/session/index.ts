@@ -11,7 +11,9 @@ export {
 } from "./utils/i18nKeys";
 export type {
   AuthAdapter,
+  DemoUser,
   LoginCredentials,
+  MagicLinkResult,
   SessionStatus,
   SessionUser,
   Tenant,

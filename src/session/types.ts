@@ -14,6 +14,18 @@ export interface Tenant {
   plan?: string;
 }
 
+export interface DemoUser {
+  id: string;
+  name: string;
+  role: string;
+  email?: string;
+}
+
+export interface MagicLinkResult {
+  sent: boolean;
+  link?: string;
+}
+
 import type { LoginCredentials } from "../types/auth";
 
 export type { LoginCredentials };
@@ -24,6 +36,9 @@ export interface AuthAdapter {
   current(): Promise<SessionUser | null>;
   listTenants?(userId: string): Promise<Tenant[]>;
   demoLogin?(userId: string): Promise<SessionUser>;
+  requestMagicLink?(email: string): Promise<MagicLinkResult>;
+  verifyToken?(token: string): Promise<SessionUser>;
+  listDemoUsers?(): Promise<DemoUser[]>;
 }
 
 export type SessionStatus = "loading" | "authenticated" | "anonymous";
