@@ -1,9 +1,3 @@
-/**
- * Session context — user + active tenant state over an injected
- * AuthAdapter. Restores the current user on mount, exposes
- * login/logout/demoLogin, loads tenants for the user and keeps an
- * `activeTenant` the OrgSwitcher drives via `switchTenant`.
- */
 
 import {
   createContext,
@@ -46,7 +40,6 @@ export const SessionProvider = ({ adapter, children }: SessionProviderProps) => 
   const [activeTenantId, setActiveTenantId] = useState<string | null>(null);
   const [status, setStatus] = useState<SessionStatus>("loading");
 
-  // Restore the session once on mount.
   useEffect(() => {
     let cancelled = false;
     adapter
@@ -64,7 +57,6 @@ export const SessionProvider = ({ adapter, children }: SessionProviderProps) => 
     };
   }, [adapter]);
 
-  // Load tenants whenever the authenticated user changes.
   useEffect(() => {
     if (!user || !adapter.listTenants) {
       setTenants([]);

@@ -1,6 +1,3 @@
-/**
- * Tests for pure auth utility functions.
- */
 
 import { describe, it, expect } from "vitest";
 import {

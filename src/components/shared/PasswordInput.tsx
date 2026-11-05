@@ -43,7 +43,6 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           {translate(labelKey)}
           {required && (
             <span className="uauth-field__required" aria-hidden="true">
-              *
             </span>
           )}
         </label>

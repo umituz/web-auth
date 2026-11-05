@@ -39,7 +39,6 @@ export const EmailInput = forwardRef<HTMLInputElement, EmailInputProps>(
           {translate(labelKey)}
           {required && (
             <span className="uauth-field__required" aria-hidden="true">
-              *
             </span>
           )}
         </label>

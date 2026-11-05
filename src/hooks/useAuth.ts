@@ -1,10 +1,3 @@
-/**
- * useAuth Hook
- *
- * Core authentication hook for managing auth state and actions.
- * Centralizes the try/catch+loading+error pattern via a single helper
- * to keep individual actions focused on their unique logic.
- */
 
 import { useState, useCallback } from "react";
 import type {
@@ -23,9 +16,6 @@ import {
   validateResetPassword,
 } from "../utils/auth";
 
-/**
- * Auth provider contract — single source of truth for backend integration.
- */
 export interface AuthProvider {
   login: (credentials: LoginCredentials) => Promise<User>;
   register: (data: RegisterData) => Promise<User>;
@@ -36,18 +26,9 @@ export interface AuthProvider {
 }
 
 interface UseAuthOptions {
-  /** Auth implementation (connects to your backend) */
   authProvider?: AuthProvider;
 }
 
-/**
- * Wrap a side-effectful async function with the standard
- * isLoading + error + throw contract.
- *
- * Important: the wrapped function is the SINGLE point of truth for
- * setting isLoading=false, ensuring errors are surfaced (not swallowed),
- * and re-throwing for callers that need to react.
- */
 const executeAuthAction = async <T>(
   updateState: (updates: Partial<AuthState>) => void,
   fallbackErrorMessage: string,
@@ -64,12 +45,6 @@ const executeAuthAction = async <T>(
   }
 };
 
-/**
- * useAuth hook
- *
- * Manages authentication state and provides auth actions.
- * Each action surfaces errors to the caller AND to the auth state.
- */
 export function useAuth(options: UseAuthOptions = {}) {
   const { authProvider } = options;
 
@@ -183,8 +158,6 @@ export function useAuth(options: UseAuthOptions = {}) {
       }
 
       return executeAuthAction(updateState, "Failed to update profile", async () => {
-        // Pure derivation of the new user, no side effects in setState callback.
-        // Required fields come from the existing user; data overrides only the rest.
         const { id: _ignoredId, ...rest } = data;
         const updatedUser: User = {
           ...currentUser,

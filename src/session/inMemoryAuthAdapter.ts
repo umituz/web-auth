@@ -1,8 +1,3 @@
-/**
- * In-memory auth adapter — zero-dependency default for demos,
- * Storybook-style setups and tests. Credentials are NOT checked
- * (any password logs in); demo accounts log in by user id.
- */
 
 import type {
   AuthAdapter,
@@ -11,7 +6,6 @@ import type {
 } from "./types";
 
 export interface InMemoryAuthAdapterOptions {
-  /** Users available for login/demo. */
   users: readonly SessionUser[];
 }
 

@@ -1,8 +1,3 @@
-/**
- * Auth Components
- *
- * Export all auth components
- */
 
 export { AuthLayout } from "./AuthLayout";
 export { LoginForm } from "./LoginForm";

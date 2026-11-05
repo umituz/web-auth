@@ -1,6 +1,3 @@
-/**
- * Shared auth form components — barrel export
- */
 
 export { AuthErrorBanner } from './AuthErrorBanner';
 export type { AuthErrorBannerProps } from './AuthErrorBanner';

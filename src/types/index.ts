@@ -1,8 +1,3 @@
-/**
- * Auth Types
- *
- * Export all auth-related types
- */
 
 export type {
   LoginCredentials,

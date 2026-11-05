@@ -1,10 +1,3 @@
-/**
- * Social Provider Icons
- *
- * Reusable SVG icon components for social auth providers.
- * Centralizes the brand mark assets so consuming forms
- * don't embed raw SVG paths in JSX.
- */
 
 import type { FC } from "react";
 

@@ -1,6 +1,3 @@
-/**
- * Session domain i18n keys — the documented string contract.
- */
 
 export const SESSION_KEYS = {
   orgSwitcher: {
