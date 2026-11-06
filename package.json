@@ -1,6 +1,6 @@
 {
   "name": "@umituz/web-auth",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Frontend auth module for the fleet — AuthLayout, Login/Register/Forgot/Reset forms, LegalPage shell for terms/privacy docs (content stays in the app), SessionProvider with an AuthAdapter seam, org switcher, demo login, ready-made better-auth client adapter + form actions; uauth-* stylesheet on design-system tokens",
   "type": "module",
   "main": "./src/index.ts",
@@ -49,7 +49,7 @@
     }
   },
   "dependencies": {
-    "@umituz/web-design-system": "^4.8.1 || ^5.0.0",
+    "@umituz/web-design-system": "^4.8.1 || ^5.0.0 || ^6.0.0",
     "lucide-react": "^0.577.0",
     "@umituz/web-localization": "^1.2.1"
   },
