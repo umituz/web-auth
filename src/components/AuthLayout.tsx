@@ -30,6 +30,10 @@ export const AuthLayout = ({
       </header>
 
       <main className="uauth-auth__main">
+        {config.brandMedia && (
+          <aside className="uauth-auth__aside">{config.brandMedia}</aside>
+        )}
+
         <div className="uauth-auth__column">
           <div className="uauth-auth__card">
             {config.brandTagline && (

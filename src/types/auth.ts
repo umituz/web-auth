@@ -1,5 +1,5 @@
 
-import type { ComponentType, ReactElement } from "react";
+import type { ComponentType, ReactElement, ReactNode } from "react";
 import type { DemoUser, MagicLinkResult, SessionUser } from "../session/types";
 
 export type Translate = (key: string, params?: Record<string, unknown>) => string;
@@ -71,6 +71,7 @@ export interface AuthStep {
 export interface AuthConfig {
   brandName: string;
   brandTagline?: string;
+  brandMedia?: ReactNode;
   loginRoute: string;
   registerRoute: string;
   forgotPasswordRoute?: string;

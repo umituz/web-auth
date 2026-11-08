@@ -78,6 +78,22 @@
   width: 100%;
   max-width: 420px;
 }
+.uauth-auth__aside {
+  flex: 1 1 0;
+  max-width: 560px;
+  align-self: stretch;
+  display: flex;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+.uauth-auth__aside > * {
+  flex: 1;
+}
+@media (max-width: 960px) {
+  .uauth-auth__aside {
+    display: none;
+  }
+}
 .uauth-auth__card {
   background: var(--color-card);
   border: 1px solid var(--color-border);
