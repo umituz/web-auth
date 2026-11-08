@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router";
-import { useT } from "@umituz/web-localization/react";
+import { useAuthT } from "../utils/messages";
 import { Loader2 } from "lucide-react";
 import { Button, Checkbox, Input } from "@umituz/web-design-system/atoms";
 import { cn } from "@umituz/web-design-system/utils/cn";
@@ -55,7 +55,7 @@ export const RegisterForm = ({
   onAppleLogin,
 }: RegisterFormProps) => {
   const navigate = useNavigate();
-  const t = useT();
+  const t = useAuthT();
   const translate: Translate = t;
 
   const [name, setName] = useState<string>(defaultData.name ?? '');

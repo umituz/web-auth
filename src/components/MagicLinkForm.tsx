@@ -6,6 +6,7 @@ import { useSession } from "../session";
 import type { MagicLinkResult } from "../session";
 import { validateForgotPassword } from "../utils/auth";
 import { AUTH_KEYS } from "../utils/i18nKeys";
+import { authT } from "../utils/messages";
 import type { MagicLinkFormProps, Translate } from "../types/auth";
 import { AuthErrorBanner } from "./shared";
 
@@ -17,19 +18,6 @@ const KEYS = {
   requestFailed: 'auth.magicLink.requestFailed',
 } as const;
 
-const DEFAULT_STRINGS: Record<string, string> = {
-  [KEYS.submit]: 'Send sign-in link',
-  [KEYS.submitting]: 'Sending…',
-  [KEYS.openLink]: 'Open sign-in link',
-  [KEYS.requestFailed]: 'Could not send sign-in link',
-  'auth.magicLink.demoNote': "Demo mode — the email isn't sent, use the link directly:",
-  'auth.magicLink.sentNote': 'If this address has an account, a sign-in link is on its way.',
-  'auth.fields.email': 'Email',
-  'auth.placeholders.emailExample': 'you@example.com',
-  'auth.errors.emailRequired': 'Email is required',
-  'auth.errors.emailInvalid': 'Enter a valid email address',
-};
-
 export const MagicLinkForm = ({
   config,
   onRequestLink,
@@ -37,7 +25,7 @@ export const MagicLinkForm = ({
   translate,
   disabled = false,
 }: MagicLinkFormProps) => {
-  const t: Translate = translate ?? ((key) => DEFAULT_STRINGS[key] ?? key);
+  const t: Translate = translate ?? authT;
   const { requestMagicLink } = useSession();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");

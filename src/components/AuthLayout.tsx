@@ -1,13 +1,8 @@
 import { BrandLogo } from "./BrandLogo";
 import { cn } from "@umituz/web-design-system/utils/cn";
 import { AUTH_KEYS } from "../utils/i18nKeys";
+import { authT } from "../utils/messages";
 import type { AuthLayoutProps, Translate } from "../types/auth";
-
-const DEFAULT_STRINGS: Record<string, string> = {
-  [AUTH_KEYS.layout.backToHome]: "Back to home",
-  [AUTH_KEYS.layout.orContinueWith]: "Or continue with",
-  [AUTH_KEYS.layout.allRightsReserved]: "All rights reserved.",
-};
 
 export const AuthLayout = ({
   config,
@@ -15,7 +10,7 @@ export const AuthLayout = ({
   onSocialLogin,
   children,
 }: AuthLayoutProps) => {
-  const t: Translate = translate ?? ((key) => DEFAULT_STRINGS[key] ?? key);
+  const t: Translate = translate ?? authT;
   const homeRoute = config.homeRoute ?? config.afterLoginRoute;
   const footerLinks = config.footerLinks ?? [];
 

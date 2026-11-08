@@ -7,6 +7,7 @@ import { MagicLinkForm } from "./MagicLinkForm";
 import { useSession } from "../session";
 import type { DemoUser } from "../session";
 import { resolveHomeRoute } from "../utils/auth";
+import { authT } from "../utils/messages";
 import type { MagicLinkLoginPageProps, Translate } from "../types/auth";
 
 const KEYS = {
@@ -17,14 +18,6 @@ const KEYS = {
   loginFailed: 'auth.magicLink.loginFailed',
 } as const;
 
-const DEFAULT_STRINGS: Record<string, string> = {
-  [KEYS.title]: 'Sign in',
-  [KEYS.subtitle]: 'Pick a workspace member or request a sign-in link by email.',
-  [KEYS.divider]: 'or sign in by email',
-  [KEYS.loadFailed]: 'Failed to load workspace members',
-  [KEYS.loginFailed]: 'Sign-in failed',
-};
-
 export const MagicLinkLoginPage = ({
   config,
   title,
@@ -33,7 +26,7 @@ export const MagicLinkLoginPage = ({
   onLogin,
   translate,
 }: MagicLinkLoginPageProps) => {
-  const t: Translate = translate ?? ((key) => DEFAULT_STRINGS[key] ?? key);
+  const t: Translate = translate ?? authT;
   const { demoLogin, listDemoUsers } = useSession();
   const navigate = useNavigate();
   const [demoUsers, setDemoUsers] = useState<DemoUser[] | null>(null);

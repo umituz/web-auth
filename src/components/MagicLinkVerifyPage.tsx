@@ -5,6 +5,7 @@ import { AuthLayout } from "./AuthLayout";
 import { AuthErrorBanner } from "./shared";
 import { useSession } from "../session";
 import { resolveHomeRoute } from "../utils/auth";
+import { authT } from "../utils/messages";
 import type { MagicLinkVerifyPageProps, Translate } from "../types/auth";
 
 const KEYS = {
@@ -14,15 +15,8 @@ const KEYS = {
   failed: 'auth.magicLink.verifyFailed',
 } as const;
 
-const DEFAULT_STRINGS: Record<string, string> = {
-  [KEYS.title]: 'Signing you in',
-  [KEYS.subtitle]: 'Verifying your sign-in link…',
-  [KEYS.missingToken]: 'Missing sign-in token',
-  [KEYS.failed]: 'Sign-in failed',
-};
-
 export const MagicLinkVerifyPage = ({ config, onVerified, translate }: MagicLinkVerifyPageProps) => {
-  const t: Translate = translate ?? ((key) => DEFAULT_STRINGS[key] ?? key);
+  const t: Translate = translate ?? authT;
   const [params] = useSearchParams();
   const token = params.get("token") ?? "";
   const { verifyToken } = useSession();

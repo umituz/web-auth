@@ -22,5 +22,6 @@ export {
 
 export { authErrorMessage } from "./errors";
 export { AUTH_KEYS } from "./i18nKeys";
+export { authT, createAuthT, useAuthT } from "./messages";
 export { AUTH_VALIDATION_KEYS } from "./validationKeys";
 export type { AuthValidationKey } from "./validationKeys";

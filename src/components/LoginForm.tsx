@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router";
-import { useT } from "@umituz/web-localization/react";
+import { useAuthT } from "../utils/messages";
 import { Button, Checkbox } from "@umituz/web-design-system/atoms";
 import { Loader2 } from "lucide-react";
 import { validateLogin } from "../utils/auth";
@@ -52,7 +52,7 @@ export const LoginForm = ({
   onAppleLogin,
 }: LoginFormProps) => {
   const navigate = useNavigate();
-  const t = useT();
+  const t = useAuthT();
   const translate: Translate = t;
 
   const [email, setEmail] = useState<string>(defaultCredentials?.email ?? "");

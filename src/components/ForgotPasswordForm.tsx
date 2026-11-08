@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { useT } from "@umituz/web-localization/react";
+import { useAuthT } from "../utils/messages";
 import { ArrowLeft, Loader2, CheckCircle2, Check } from "lucide-react";
 import { Button } from "@umituz/web-design-system/atoms";
 import type { ForgotPasswordFormProps, Translate } from "../types/auth";
@@ -35,7 +35,7 @@ export const ForgotPasswordForm = ({
   showBackLink = true,
 }: ForgotPasswordFormProps) => {
   const navigate = useNavigate();
-  const t = useT();
+  const t = useAuthT();
   const translate: Translate = t;
 
   const [email, setEmail] = useState("");
