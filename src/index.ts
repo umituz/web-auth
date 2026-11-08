@@ -44,6 +44,8 @@ export {
   type AuthValidationKey,
 } from "./utils";
 
+export type { DemoUser } from "./session";
+
 export type {
   LoginCredentials,
   RegisterData,
