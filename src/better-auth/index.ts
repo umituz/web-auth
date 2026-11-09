@@ -61,7 +61,7 @@ export async function betterAuthRegister(
   const { data: result, error } = await client.signUp.email({
     email: data.email,
     password: data.password,
-    name: data.name?.trim() || data.email.split('@')[0],
+    name: data.name?.trim() || data.email.split('@')[0] || '',
   });
   if (error) {
     throw new Error(
