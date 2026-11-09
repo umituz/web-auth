@@ -755,3 +755,100 @@
   font-size: var(--uauth-font-size-xs);
   opacity: 0.65;
 }
+.uauth-auth__locale {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 var(--uauth-space-4);
+}
+.uauth-segmented {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: var(--uauth-radius-pill);
+  background: var(--color-muted);
+}
+.uauth-segmented__btn {
+  border: none;
+  padding: 4px var(--uauth-space-3);
+  border-radius: var(--uauth-radius-pill);
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--uauth-font-size-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.02em;
+  color: var(--color-muted-foreground);
+  cursor: pointer;
+}
+.uauth-segmented__btn:hover {
+  color: var(--color-foreground);
+}
+.uauth-segmented__btn--active {
+  background: var(--color-card);
+  color: var(--color-foreground);
+}
+.uauth-org-picker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--uauth-space-3);
+}
+.uauth-org-picker__title {
+  margin: 0;
+  font-size: var(--uauth-font-size-xs);
+  font-weight: var(--font-weight-semibold, 600);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-muted-foreground);
+}
+.uauth-org-picker__orgs {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.uauth-org-card {
+  justify-content: flex-start !important;
+  gap: var(--uauth-space-3);
+  width: 100%;
+}
+.uauth-org-card__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  min-width: 0;
+}
+.uauth-org-card__name {
+  font-size: 13px;
+}
+.uauth-org-card__meta {
+  font-size: var(--uauth-font-size-xs);
+  opacity: 0.65;
+}
+.uauth-demo-search {
+  margin-bottom: var(--uauth-space-3);
+}
+.uauth-demo-orgs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--uauth-space-2);
+}
+.uauth-demo-org {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 var(--uauth-space-3);
+  border: 1px solid var(--uauth-border-strong);
+  border-radius: var(--uauth-radius-pill);
+  background: var(--color-card);
+  font-family: inherit;
+  font-size: var(--uauth-font-size-sm);
+  color: var(--color-foreground);
+  cursor: pointer;
+}
+.uauth-demo-org:hover {
+  background: var(--color-muted);
+}
+.uauth-demo-org--active {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft, color-mix(in srgb, var(--color-primary, #2563eb) 10%, transparent));
+  color: var(--color-primary);
+}

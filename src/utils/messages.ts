@@ -50,6 +50,15 @@ const MESSAGES: Record<string, string> = {
   'auth.resetPassword.successMessage': 'Your password has been changed. You can sign in with it now.',
   'auth.resetPassword.goToSignIn': 'Go to sign in',
 
+  'auth.passwordless.title': 'Sign in with email',
+  'auth.passwordless.subtitle': 'Sign in to {{brand}} with just your email — no password needed.',
+  'auth.passwordless.submit': 'Continue',
+  'auth.passwordless.submitting': 'Signing in…',
+  'auth.passwordless.demoAccounts': 'Demo accounts',
+  'auth.passwordless.loginFailed': 'Sign-in failed. Please try again.',
+
+  'auth.orgPicker.title': 'Choose an organization',
+
   'auth.magicLink.submit': 'Send sign-in link',
   'auth.magicLink.submitting': 'Sending…',
   'auth.magicLink.openLink': 'Open sign-in link',

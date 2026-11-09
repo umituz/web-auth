@@ -1,11 +1,13 @@
 export {
   AuthLayout,
   LoginForm,
+  PasswordlessForm,
   RegisterForm,
   ForgotPasswordForm,
   ResetPasswordForm,
   MagicLinkForm,
   DemoUserPicker,
+  OrgPicker,
   MagicLinkLoginPage,
   MagicLinkVerifyPage,
   LegalPage,
@@ -22,6 +24,7 @@ export {
   validateLogin,
   validateRegister,
   validateForgotPassword,
+  validatePasswordless,
   validateResetPassword,
   getUserDisplayName,
   getUserInitials,
@@ -44,7 +47,7 @@ export {
   type AuthValidationKey,
 } from "./utils";
 
-export type { DemoUser } from "./session";
+export type { DemoUser, Tenant } from "./session";
 
 export type {
   LoginCredentials,
@@ -59,13 +62,20 @@ export type {
   AuthConfig,
   SocialProvider,
   DemoUserGroup,
+  DemoUserPick,
+  LocaleOption,
+  LocaleSwitcherConfig,
   AuthLayoutProps,
   LoginFormProps,
+  PasswordlessFormProps,
+  PasswordlessDemoAccount,
+  RegisterExtraFieldsRenderArgs,
   RegisterFormProps,
   ForgotPasswordFormProps,
   ResetPasswordFormProps,
   MagicLinkFormProps,
   DemoUserPickerProps,
+  OrgPickerProps,
   MagicLinkLoginPageProps,
   MagicLinkVerifyPageProps,
   Translate,

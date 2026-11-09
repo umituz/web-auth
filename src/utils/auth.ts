@@ -69,6 +69,16 @@ export function validateForgotPassword(data: { email: string }): ValidationResul
   return { valid: true };
 }
 
+export function validatePasswordless(data: { email: string }): ValidationResult {
+  if (!data.email) {
+    return { valid: false, error: AUTH_VALIDATION_KEYS.emailRequired };
+  }
+  if (!isValidEmail(data.email)) {
+    return { valid: false, error: AUTH_VALIDATION_KEYS.emailInvalid };
+  }
+  return { valid: true };
+}
+
 export function validateResetPassword(data: {
   token: string;
   password: string;

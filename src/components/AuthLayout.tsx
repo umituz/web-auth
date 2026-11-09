@@ -8,6 +8,7 @@ export const AuthLayout = ({
   config,
   translate,
   onSocialLogin,
+  localeSwitcher,
   children,
 }: AuthLayoutProps) => {
   const t: Translate = translate ?? authT;
@@ -36,6 +37,28 @@ export const AuthLayout = ({
 
         <div className="uauth-auth__column">
           <div className="uauth-auth__card">
+            {localeSwitcher && localeSwitcher.locales.length > 0 && (
+              <div className="uauth-auth__locale">
+                <div className="uauth-segmented" role="group">
+                  {localeSwitcher.locales.map((locale) => (
+                    <button
+                      key={locale.value}
+                      type="button"
+                      className={cn(
+                        "uauth-segmented__btn",
+                        locale.value === localeSwitcher.value &&
+                          "uauth-segmented__btn--active",
+                      )}
+                      aria-pressed={locale.value === localeSwitcher.value}
+                      onClick={() => localeSwitcher.onChange(locale.value)}
+                    >
+                      {locale.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {config.brandTagline && (
               <p className="uauth-auth__tagline">
                 {config.brandTagline}

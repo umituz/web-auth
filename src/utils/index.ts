@@ -4,6 +4,7 @@ export {
   validateLogin,
   validateRegister,
   validateForgotPassword,
+  validatePasswordless,
   validateResetPassword,
   getUserDisplayName,
   getUserInitials,

@@ -48,6 +48,8 @@ export const RegisterForm = ({
   showLoginLink = true,
   requirePasswordConfirm = true,
   showSocialLogin = true,
+  extraFields,
+  initialValues,
   onRegisterAttempt,
   onRegisterSuccess,
   onRegisterError,
@@ -63,8 +65,13 @@ export const RegisterForm = ({
   const [password, setPassword] = useState<string>(defaultData.password ?? '');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [agreeToTerms, setAgreeToTerms] = useState<boolean>(false);
+  const [extraValues, setExtraValues] = useState<Record<string, string>>(initialValues ?? {});
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
+  const setExtraValue = useCallback((fieldName: string, value: string) => {
+    setExtraValues((prev) => ({ ...prev, [fieldName]: value }));
+  }, []);
 
   const passwordsMatch = !requirePasswordConfirm || password === confirmPassword;
 
@@ -96,7 +103,9 @@ export const RegisterForm = ({
         if (!onRegisterAttempt) {
           throw new Error('No register handler configured');
         }
-        const registerData: RegisterData = { email, password, name };
+        const registerData: RegisterData = extraFields
+          ? { email, password, name, metadata: extraValues }
+          : { email, password, name };
         const user = await onRegisterAttempt(registerData);
         await onRegisterSuccess?.(user);
         navigate(config.afterLoginRoute);
@@ -113,6 +122,8 @@ export const RegisterForm = ({
       config.afterLoginRoute,
       confirmPassword,
       email,
+      extraFields,
+      extraValues,
       name,
       navigate,
       onRegisterAttempt,
@@ -232,6 +243,9 @@ export const RegisterForm = ({
           </span>
         </label>
       )}
+
+      {extraFields &&
+        extraFields({ values: extraValues, setValue: setExtraValue, disabled: isLoading })}
 
       <Button
         type="submit"

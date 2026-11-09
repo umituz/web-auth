@@ -19,6 +19,7 @@ export interface DemoUser {
   name: string;
   role: string;
   email?: string;
+  orgId?: string;
 }
 
 export interface MagicLinkResult {

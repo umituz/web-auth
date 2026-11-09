@@ -1,6 +1,6 @@
 
 import type { ComponentType, ReactElement, ReactNode } from "react";
-import type { DemoUser, MagicLinkResult, SessionUser } from "../session/types";
+import type { DemoUser, MagicLinkResult, SessionUser, Tenant } from "../session/types";
 
 export type Translate = (key: string, params?: Record<string, unknown>) => string;
 
@@ -108,12 +108,29 @@ export interface DemoUserGroup {
   roleLabels?: Record<string, string>;
 }
 
+export interface DemoUserPick {
+  userId: string;
+  orgId?: string;
+}
+
+export interface LocaleOption {
+  value: string;
+  label: string;
+}
+
+export interface LocaleSwitcherConfig {
+  locales: LocaleOption[];
+  value: string;
+  onChange: (value: string) => void;
+}
+
 export interface AuthLayoutProps {
   config: AuthConfig;
   authState?: AuthState;
   authActions?: AuthActions;
   translate?: Translate;
   onSocialLogin?: (providerId: string) => void | Promise<void>;
+  localeSwitcher?: LocaleSwitcherConfig;
   children?: React.ReactNode;
 }
 
@@ -132,6 +149,12 @@ export interface LoginFormProps {
   onAppleLogin?: () => void | Promise<void>;
 }
 
+export interface RegisterExtraFieldsRenderArgs {
+  values: Record<string, string>;
+  setValue: (name: string, value: string) => void;
+  disabled: boolean;
+}
+
 export interface RegisterFormProps {
   config: AuthConfig;
   defaultData?: Partial<RegisterData>;
@@ -139,6 +162,8 @@ export interface RegisterFormProps {
   showLoginLink?: boolean;
   requirePasswordConfirm?: boolean;
   showSocialLogin?: boolean;
+  extraFields?: (args: RegisterExtraFieldsRenderArgs) => ReactNode;
+  initialValues?: Record<string, string>;
   onRegisterAttempt?: (data: RegisterData) => Promise<User>;
   onRegisterSuccess?: (user: User) => void | Promise<void>;
   onRegisterError?: (error: string) => void;
@@ -168,10 +193,37 @@ export interface MagicLinkFormProps {
   disabled?: boolean;
 }
 
+export interface PasswordlessDemoAccount {
+  id: string;
+  email: string;
+  label?: string;
+}
+
+export interface PasswordlessFormProps {
+  config: AuthConfig;
+  description?: string;
+  demoAccounts?: PasswordlessDemoAccount[];
+  onPasswordlessLogin?: (email: string) => void | Promise<void>;
+  onLoginError?: (error: string) => void;
+  translate?: Translate;
+}
+
 export interface DemoUserPickerProps {
   users: DemoUser[];
   groups: DemoUserGroup[];
   onPick: (userId: string) => void | Promise<void>;
+  searchable?: boolean;
+  searchPlaceholder?: string;
+  orgs?: Tenant[];
+  onPickPair?: (pick: DemoUserPick) => void | Promise<void>;
+}
+
+export interface OrgPickerProps {
+  config: AuthConfig;
+  orgs: Tenant[];
+  onPick: (orgId: string) => void | Promise<void>;
+  title?: string;
+  translate?: Translate;
 }
 
 export interface MagicLinkLoginPageProps {

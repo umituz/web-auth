@@ -7,6 +7,7 @@ import {
   groupDemoUsers,
   validateLogin,
   validateRegister,
+  validatePasswordless,
   validateResetPassword,
   getUserDisplayName,
   getUserInitials,
@@ -104,6 +105,26 @@ describe("validateRegister", () => {
     expect(
       validateRegister({ ...base, name: "A", confirmPassword: base.password }, false, true),
     ).toEqual({ valid: true });
+  });
+});
+
+describe("validatePasswordless", () => {
+  it("passes a well-formed email", () => {
+    expect(validatePasswordless({ email: "a@b.co" })).toEqual({ valid: true });
+  });
+
+  it("requires an email", () => {
+    expect(validatePasswordless({ email: "" })).toEqual({
+      valid: false,
+      error: AUTH_VALIDATION_KEYS.emailRequired,
+    });
+  });
+
+  it("rejects a malformed email", () => {
+    expect(validatePasswordless({ email: "nope" })).toEqual({
+      valid: false,
+      error: AUTH_VALIDATION_KEYS.emailInvalid,
+    });
   });
 });
 
