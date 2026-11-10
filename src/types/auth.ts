@@ -92,6 +92,8 @@ export interface AuthConfig {
   demoGroups?: DemoUserGroup[];
   magicLinkDemoNote?: string;
   magicLinkSentNote?: string;
+  labels?: Record<string, string>;
+  t?: Translate;
 }
 
 export interface SocialProvider {

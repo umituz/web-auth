@@ -50,8 +50,7 @@
     }
   },
   "dependencies": {
-    "lucide-react": "^0.577.0",
-    "@umituz/web-localization": "^1.2.1"
+    "lucide-react": "^0.577.0"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.2",

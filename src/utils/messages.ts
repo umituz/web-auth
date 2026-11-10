@@ -1,4 +1,4 @@
-import { defaultT, useT } from "@umituz/web-localization/react";
+import { createContext, useContext, createElement, type ReactNode } from "react";
 import type { Translate } from "../types/auth";
 
 const MESSAGES: Record<string, string> = {
@@ -119,6 +119,18 @@ const MESSAGES: Record<string, string> = {
   'auth.validation.nameRequired': 'Name is required.',
   'auth.validation.emailTaken': 'An account with this email already exists.',
   'auth.validation.invalidResetToken': 'This reset link is invalid or has expired.',
+
+  'session.demoLogin.action': 'Continue as {{userId}}',
+  'session.orgSwitcher.label': 'Switch organization',
+};
+
+const WORD_SPLIT = /[._-]+|(?<=[a-z0-9])(?=[A-Z])/g;
+
+const humanizeSegment = (segment: string): string => {
+  const words = segment.split(WORD_SPLIT).filter(Boolean);
+  if (words.length === 0) return segment;
+  const sentence = words.join(" ").toLowerCase();
+  return sentence.charAt(0).toUpperCase() + sentence.slice(1);
 };
 
 const interpolate = (text: string, params?: Record<string, unknown>): string => {
@@ -126,6 +138,12 @@ const interpolate = (text: string, params?: Record<string, unknown>): string => 
   return text.replace(/\{\{\s*(\w+)\s*\}\}/g, (match, name: string) =>
     name in params ? String(params[name]) : match,
   );
+};
+
+export const defaultT: Translate = (key, params) => {
+  const segments = key.split(".").filter(Boolean);
+  const source = segments[segments.length - 1] ?? key;
+  return interpolate(humanizeSegment(source), params);
 };
 
 export const authT: Translate = (key, params) => {
@@ -142,7 +160,18 @@ export const createAuthT = (overrides: Record<string, string>): Translate => {
   };
 };
 
+export const AuthI18nContext = createContext<Translate>(authT);
+
+export const AuthI18nProvider = ({
+  translate,
+  children,
+}: {
+  translate: Translate;
+  children: ReactNode;
+}) => {
+  return createElement(AuthI18nContext.Provider, { value: translate }, children);
+};
+
 export const useAuthT = (): Translate => {
-  const provided = useT();
-  return provided === defaultT ? authT : provided;
+  return useContext(AuthI18nContext);
 };

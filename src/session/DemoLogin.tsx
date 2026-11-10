@@ -1,6 +1,6 @@
 import { UserRound } from "lucide-react";
 import { Button } from "@umituz/web-design-system/atoms";
-import { useT } from "@umituz/web-localization/react";
+import { useAuthT } from "../utils/messages";
 import { SESSION_KEYS } from "./utils/i18nKeys";
 
 export interface DemoLoginProps {
@@ -22,7 +22,7 @@ export const DemoLogin = ({
   disabled = false,
   className,
 }: DemoLoginProps) => {
-  const t = useT();
+  const t = useAuthT();
 
   return (
     <Button
@@ -34,7 +34,7 @@ export const DemoLogin = ({
       onClick={() => void onDemo(userId)}
     >
       <UserRound aria-hidden="true" />
-      {label ?? t(SESSION_KEYS.demoLogin.action)}
+      {label ?? t(SESSION_KEYS.demoLogin.action, { userId })}
     </Button>
   );
 };

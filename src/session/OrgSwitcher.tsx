@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Building2, Check, ChevronDown } from "lucide-react";
 import { cn } from "@umituz/web-design-system/utils/cn";
-import { useT } from "@umituz/web-localization/react";
+import { useAuthT } from "../utils/messages";
 import { SESSION_KEYS } from "./utils/i18nKeys";
 import type { Tenant } from "./types";
 
@@ -11,6 +11,7 @@ export interface OrgSwitcherProps {
   onSwitch: (tenantId: string) => void;
   disabled?: boolean;
   className?: string;
+  label?: string;
 }
 
 const initialsOf = (tenant: Tenant): string =>
@@ -27,8 +28,9 @@ export const OrgSwitcher = ({
   onSwitch,
   disabled = false,
   className,
+  label,
 }: OrgSwitcherProps) => {
-  const t = useT();
+  const t = useAuthT();
   const [open, setOpen] = useState(false);
 
   if (tenants.length === 0) return null;
@@ -44,7 +46,7 @@ export const OrgSwitcher = ({
         disabled={disabled}
         aria-haspopup="menu"
         aria-expanded={open}
-        aria-label={t(SESSION_KEYS.orgSwitcher.label)}
+        aria-label={label ?? t(SESSION_KEYS.orgSwitcher.label)}
         onClick={() => setOpen((prev) => !prev)}
       >
         <span className="uauth-avatar">{initialsOf(active)}</span>

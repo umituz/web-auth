@@ -23,6 +23,6 @@ export {
 
 export { authErrorMessage } from "./errors";
 export { AUTH_KEYS } from "./i18nKeys";
-export { authT, createAuthT, useAuthT } from "./messages";
+export { authT, createAuthT, useAuthT, AuthI18nProvider, AuthI18nContext, defaultT } from "./messages";
 export { AUTH_VALIDATION_KEYS } from "./validationKeys";
 export type { AuthValidationKey } from "./validationKeys";
