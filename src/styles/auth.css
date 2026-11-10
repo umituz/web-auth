@@ -324,6 +324,12 @@
   font-size: var(--uauth-font-size-sm);
   color: var(--color-destructive);
 }
+.uauth-field__hint {
+  margin: 0;
+  font-size: var(--uauth-font-size-sm);
+  color: var(--color-muted-foreground, color-mix(in srgb, var(--color-foreground) 60%, transparent));
+  line-height: 1.4;
+}
 .uauth-form-alert {
   display: flex;
   align-items: flex-start;

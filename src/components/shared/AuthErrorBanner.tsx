@@ -10,7 +10,8 @@ export interface AuthErrorBannerProps {
 export const AuthErrorBanner = ({ message, translate, className }: AuthErrorBannerProps) => {
   if (!message) return null;
 
-  const resolved = message.includes('.') ? translate(message) : message;
+  const looksLikeKey = message.includes('.') && !/\s/.test(message.trim());
+  const resolved = looksLikeKey ? translate(message) : message;
 
   return (
     <div

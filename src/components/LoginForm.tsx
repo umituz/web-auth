@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useAuthT } from "../utils/messages";
 import { Button, Checkbox } from "@umituz/web-design-system/atoms";
@@ -45,6 +45,10 @@ export const LoginForm = ({
   showRegisterLink = true,
   showSocialLogin = true,
   enableMockAuth = false,
+  autoFocusEmail = false,
+  statusKeys,
+  navigateOptions,
+  onBusyChange,
   onLoginAttempt,
   onLoginSuccess,
   onLoginError,
@@ -60,6 +64,10 @@ export const LoginForm = ({
   const [remember, setRemember] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    onBusyChange?.(loading);
+  }, [loading, onBusyChange]);
 
   const performLogin = useCallback(
     async (credentials: LoginCredentials): Promise<User> => {
@@ -96,11 +104,14 @@ export const LoginForm = ({
       try {
         const user = await performLogin({ email, password });
         await onLoginSuccess?.(user);
-        navigate(config.afterLoginRoute);
+        navigate(config.afterLoginRouteFor?.(user) ?? config.afterLoginRoute, {
+          replace: navigateOptions?.replace,
+        });
       } catch (err) {
         const message = authErrorMessage(err, KEYS.loginFailed, {
           401: KEYS.invalidCredentials,
           403: KEYS.invalidCredentials,
+          ...statusKeys,
         });
         setError(message);
         onLoginError?.(message);
@@ -108,7 +119,18 @@ export const LoginForm = ({
         setLoading(false);
       }
     },
-    [email, password, performLogin, navigate, config.afterLoginRoute, onLoginSuccess, onLoginError],
+    [
+      email,
+      password,
+      performLogin,
+      navigate,
+      config.afterLoginRoute,
+      config.afterLoginRouteFor,
+      navigateOptions,
+      statusKeys,
+      onLoginSuccess,
+      onLoginError,
+    ],
   );
 
   const handleSocial = useCallback(
@@ -141,6 +163,7 @@ export const LoginForm = ({
         translate={translate}
         disabled={loading}
         required
+        autoFocus={autoFocusEmail}
       />
 
       <PasswordInput

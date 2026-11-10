@@ -16,6 +16,8 @@ export interface PasswordInputProps {
   required?: boolean;
   error?: string | null;
   className?: string;
+  autoFocus?: boolean;
+  hint?: string;
 }
 
 export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
@@ -32,6 +34,8 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
       required = false,
       error = null,
       className,
+      autoFocus = false,
+      hint,
     },
     ref,
   ) => {
@@ -57,6 +61,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             value={value}
             placeholder={translate(placeholderKey)}
             onChange={(e) => onChange(e.target.value)}
+            autoFocus={autoFocus}
             aria-invalid={Boolean(error)}
             aria-describedby={error ? `${id}-error` : undefined}
             className="uauth-input--with-toggle"
@@ -91,6 +96,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             {error}
           </p>
         )}
+        {hint && <p className="uauth-field__hint">{hint}</p>}
       </div>
     );
   },

@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useAuthT } from "../utils/messages";
 import { Loader2 } from "lucide-react";
@@ -47,9 +47,15 @@ export const RegisterForm = ({
   showTerms = true,
   showLoginLink = true,
   requirePasswordConfirm = true,
+  requireName = false,
   showSocialLogin = true,
   extraFields,
   initialValues,
+  fieldHints,
+  autoFocusEmail = false,
+  statusKeys,
+  navigateOptions,
+  onBusyChange,
   onRegisterAttempt,
   onRegisterSuccess,
   onRegisterError,
@@ -69,6 +75,10 @@ export const RegisterForm = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    onBusyChange?.(isLoading);
+  }, [isLoading, onBusyChange]);
+
   const setExtraValue = useCallback((fieldName: string, value: string) => {
     setExtraValues((prev) => ({ ...prev, [fieldName]: value }));
   }, []);
@@ -82,7 +92,7 @@ export const RegisterForm = ({
 
       const validation = validateRegister(
         { email, password, name, confirmPassword },
-        false,
+        requireName,
         requirePasswordConfirm,
       );
       if (!validation.valid) {
@@ -108,9 +118,11 @@ export const RegisterForm = ({
           : { email, password, name };
         const user = await onRegisterAttempt(registerData);
         await onRegisterSuccess?.(user);
-        navigate(config.afterLoginRoute);
+        navigate(config.afterLoginRouteFor?.(user) ?? config.afterLoginRoute, {
+          replace: navigateOptions?.replace,
+        });
       } catch (err) {
-        const message = authErrorMessage(err, KEYS.invalidData);
+        const message = authErrorMessage(err, KEYS.invalidData, statusKeys);
         setError(message);
         onRegisterError?.(message);
       } finally {
@@ -120,6 +132,9 @@ export const RegisterForm = ({
     [
       agreeToTerms,
       config.afterLoginRoute,
+      config.afterLoginRouteFor,
+      navigateOptions,
+      statusKeys,
       confirmPassword,
       email,
       extraFields,
@@ -130,6 +145,7 @@ export const RegisterForm = ({
       onRegisterError,
       onRegisterSuccess,
       password,
+      requireName,
       requirePasswordConfirm,
       showTerms,
     ],
@@ -169,6 +185,7 @@ export const RegisterForm = ({
           placeholder={translate(KEYS.namePlaceholder)}
           onChange={(e) => setName(e.target.value)}
         />
+        {fieldHints?.name && <p className="uauth-field__hint">{fieldHints.name}</p>}
       </div>
 
       <EmailInput
@@ -180,6 +197,8 @@ export const RegisterForm = ({
         translate={translate}
         disabled={isLoading}
         required
+        autoFocus={autoFocusEmail}
+        hint={fieldHints?.email}
       />
 
       <div className="uauth-form__group">
@@ -193,6 +212,7 @@ export const RegisterForm = ({
           autoComplete="new-password"
           disabled={isLoading}
           required
+          hint={fieldHints?.password}
         />
         <PasswordStrengthIndicator password={password} translate={translate} />
       </div>

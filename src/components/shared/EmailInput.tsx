@@ -14,6 +14,8 @@ export interface EmailInputProps {
   required?: boolean;
   error?: string | null;
   className?: string;
+  autoFocus?: boolean;
+  hint?: string;
 }
 
 export const EmailInput = forwardRef<HTMLInputElement, EmailInputProps>(
@@ -30,6 +32,8 @@ export const EmailInput = forwardRef<HTMLInputElement, EmailInputProps>(
       required = false,
       error = null,
       className,
+      autoFocus = false,
+      hint,
     },
     ref,
   ) => {
@@ -52,9 +56,11 @@ export const EmailInput = forwardRef<HTMLInputElement, EmailInputProps>(
           value={value}
           placeholder={translate(placeholderKey)}
           onChange={(e) => onChange(e.target.value)}
+          autoFocus={autoFocus}
           aria-invalid={Boolean(error)}
           aria-describedby={error ? `${id}-error` : undefined}
         />
+        {hint && <p className="uauth-field__hint">{hint}</p>}
         {error && (
           <p
             id={`${id}-error`}

@@ -78,6 +78,7 @@ export interface AuthConfig {
   termsRoute: string;
   privacyRoute: string;
   afterLoginRoute: string;
+  afterLoginRouteFor?: (user: User) => string;
   afterLogoutRoute: string;
   showSocialLogin?: boolean;
   socialProviders?: SocialProvider[];
@@ -134,6 +135,20 @@ export interface AuthLayoutProps {
   children?: React.ReactNode;
 }
 
+export interface AuthNavigateOptions {
+  replace?: boolean;
+}
+
+export interface AuthStatusKeys {
+  [status: number]: string;
+}
+
+export interface AuthFieldHints {
+  name?: string;
+  email?: string;
+  password?: string;
+}
+
 export interface LoginFormProps {
   config: AuthConfig;
   defaultCredentials?: Partial<LoginCredentials>;
@@ -142,6 +157,10 @@ export interface LoginFormProps {
   showRegisterLink?: boolean;
   showSocialLogin?: boolean;
   enableMockAuth?: boolean;
+  autoFocusEmail?: boolean;
+  statusKeys?: AuthStatusKeys;
+  navigateOptions?: AuthNavigateOptions;
+  onBusyChange?: (busy: boolean) => void;
   onLoginAttempt?: (credentials: LoginCredentials) => Promise<User>;
   onLoginSuccess?: (user: User) => void | Promise<void>;
   onLoginError?: (error: string) => void;
@@ -161,9 +180,15 @@ export interface RegisterFormProps {
   showTerms?: boolean;
   showLoginLink?: boolean;
   requirePasswordConfirm?: boolean;
+  requireName?: boolean;
   showSocialLogin?: boolean;
   extraFields?: (args: RegisterExtraFieldsRenderArgs) => ReactNode;
   initialValues?: Record<string, string>;
+  fieldHints?: AuthFieldHints;
+  autoFocusEmail?: boolean;
+  statusKeys?: AuthStatusKeys;
+  navigateOptions?: AuthNavigateOptions;
+  onBusyChange?: (busy: boolean) => void;
   onRegisterAttempt?: (data: RegisterData) => Promise<User>;
   onRegisterSuccess?: (user: User) => void | Promise<void>;
   onRegisterError?: (error: string) => void;
@@ -197,12 +222,19 @@ export interface PasswordlessDemoAccount {
   id: string;
   email: string;
   label?: string;
+  meta?: string;
 }
 
 export interface PasswordlessFormProps {
   config: AuthConfig;
   description?: string;
   demoAccounts?: PasswordlessDemoAccount[];
+  defaultEmail?: string;
+  onEmailChange?: (email: string) => void;
+  disabled?: boolean;
+  autoFocusEmail?: boolean;
+  statusKeys?: AuthStatusKeys;
+  onBusyChange?: (busy: boolean) => void;
   onPasswordlessLogin?: (email: string) => void | Promise<void>;
   onLoginError?: (error: string) => void;
   translate?: Translate;
