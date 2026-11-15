@@ -11,6 +11,5 @@ export { OrgPicker } from "./OrgPicker";
 export { MagicLinkLoginPage } from "./MagicLinkLoginPage";
 export { MagicLinkVerifyPage } from "./MagicLinkVerifyPage";
 export { AuthRedirect } from "./AuthRedirect";
-export { DemoLoginPage } from "./DemoLoginPage";
 export { PasswordLoginPage } from "./PasswordLoginPage";
 export { LegalPage, type LegalDoc, type LegalSection, type LegalPageProps } from "./LegalPage";
