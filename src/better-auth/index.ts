@@ -5,7 +5,10 @@ import type { User } from '../types';
 type AuthClient = ReturnType<typeof createAuthClient>;
 
 function clientOf(baseURL?: string): AuthClient {
-  return createAuthClient(baseURL ? { baseURL } : undefined);
+  if (baseURL && /^https?:\/\//i.test(baseURL)) {
+    return createAuthClient({ baseURL });
+  }
+  return createAuthClient(baseURL ? { basePath: baseURL } : undefined);
 }
 
 interface BetterAuthUser {

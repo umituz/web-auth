@@ -18,6 +18,7 @@ vi.mock('better-auth/client', () => ({
   })),
 }));
 
+import { createAuthClient } from 'better-auth/client';
 import { betterAuthAdapter, betterAuthRegister, betterAuthResetPassword } from './index';
 
 const user = { id: 'u1', email: 'a@b.c', name: 'A B' };
@@ -99,5 +100,22 @@ describe('betterAuthResetPassword', () => {
   it('resolves silently on success', async () => {
     resetPassword.mockResolvedValue({ data: { status: true }, error: null });
     await expect(betterAuthResetPassword({ token: 't', password: 'pw' })).resolves.toBeUndefined();
+  });
+});
+
+describe('clientOf', () => {
+  it('passes a relative base as basePath so environments without a location can build the client', () => {
+    betterAuthAdapter({ baseURL: '/api/auth' });
+    expect(createAuthClient).toHaveBeenCalledWith({ basePath: '/api/auth' });
+  });
+
+  it('passes an absolute base as baseURL', () => {
+    betterAuthAdapter({ baseURL: 'https://example.com/api/auth' });
+    expect(createAuthClient).toHaveBeenCalledWith({ baseURL: 'https://example.com/api/auth' });
+  });
+
+  it('omits options entirely when no base is given', () => {
+    betterAuthAdapter();
+    expect(createAuthClient).toHaveBeenCalledWith(undefined);
   });
 });
