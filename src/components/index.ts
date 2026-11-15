@@ -10,6 +10,6 @@ export { DemoUserPicker } from "./DemoUserPicker";
 export { OrgPicker } from "./OrgPicker";
 export { MagicLinkLoginPage } from "./MagicLinkLoginPage";
 export { MagicLinkVerifyPage } from "./MagicLinkVerifyPage";
-export { AuthRedirect } from "./AuthRedirect";
-export { PasswordLoginPage } from "./PasswordLoginPage";
+export { AuthRedirect, type AuthRedirectProps } from "./AuthRedirect";
+export { PasswordLoginPage, type PasswordLoginPageProps } from "./PasswordLoginPage";
 export { LegalPage, type LegalDoc, type LegalSection, type LegalPageProps } from "./LegalPage";
