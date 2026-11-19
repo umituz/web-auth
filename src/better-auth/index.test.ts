@@ -6,6 +6,11 @@ const getSession = vi.fn();
 const signUpEmail = vi.fn();
 const requestPasswordReset = vi.fn();
 const resetPassword = vi.fn();
+const changePassword = vi.fn();
+const revokeOtherSessions = vi.fn();
+const listSessions = vi.fn();
+const revokeSession = vi.fn();
+const sendVerificationEmail = vi.fn();
 
 vi.mock('better-auth/client', () => ({
   createAuthClient: vi.fn(() => ({
@@ -15,11 +20,25 @@ vi.mock('better-auth/client', () => ({
     signUp: { email: signUpEmail },
     requestPasswordReset,
     resetPassword,
+    changePassword,
+    revokeOtherSessions,
+    listSessions,
+    revokeSession,
+    sendVerificationEmail,
   })),
 }));
 
 import { createAuthClient } from 'better-auth/client';
-import { betterAuthAdapter, betterAuthRegister, betterAuthResetPassword } from './index';
+import {
+  betterAuthAdapter,
+  betterAuthRegister,
+  betterAuthResetPassword,
+  betterAuthChangePassword,
+  betterAuthRevokeOtherSessions,
+  betterAuthListSessions,
+  betterAuthRevokeSession,
+  betterAuthSendVerificationEmail,
+} from './index';
 
 const user = { id: 'u1', email: 'a@b.c', name: 'A B' };
 
@@ -100,6 +119,52 @@ describe('betterAuthResetPassword', () => {
   it('resolves silently on success', async () => {
     resetPassword.mockResolvedValue({ data: { status: true }, error: null });
     await expect(betterAuthResetPassword({ token: 't', password: 'pw' })).resolves.toBeUndefined();
+  });
+});
+
+describe('betterAuthChangePassword', () => {
+  it('calls changePassword and resolves on success', async () => {
+    changePassword.mockResolvedValue({ data: { status: true }, error: null });
+    await expect(
+      betterAuthChangePassword({ currentPassword: 'old', newPassword: 'new' }),
+    ).resolves.toBeUndefined();
+    expect(changePassword).toHaveBeenCalledWith({
+      currentPassword: 'old',
+      newPassword: 'new',
+      revokeOtherSessions: true,
+    });
+  });
+
+  it('throws invalidCurrentPassword on INVALID_PASSWORD code', async () => {
+    changePassword.mockResolvedValue({ data: null, error: { code: 'INVALID_PASSWORD', message: 'wrong' } });
+    await expect(
+      betterAuthChangePassword({ currentPassword: 'bad', newPassword: 'new' }),
+    ).rejects.toThrow('auth.errors.invalidCurrentPassword');
+  });
+});
+
+describe('betterAuthRevokeOtherSessions and sessions management', () => {
+  it('calls revokeOtherSessions successfully', async () => {
+    revokeOtherSessions.mockResolvedValue({ data: { status: true }, error: null });
+    await expect(betterAuthRevokeOtherSessions()).resolves.toBeUndefined();
+  });
+
+  it('lists active sessions or returns empty array', async () => {
+    listSessions.mockResolvedValue({ data: [{ id: 's1' }], error: null });
+    const res = await betterAuthListSessions();
+    expect(res).toEqual([{ id: 's1' }]);
+  });
+
+  it('calls revokeSession with token', async () => {
+    revokeSession.mockResolvedValue({ data: { status: true }, error: null });
+    await expect(betterAuthRevokeSession('token-123')).resolves.toBeUndefined();
+    expect(revokeSession).toHaveBeenCalledWith({ token: 'token-123' });
+  });
+
+  it('calls sendVerificationEmail with email', async () => {
+    sendVerificationEmail.mockResolvedValue({ data: { status: true }, error: null });
+    await expect(betterAuthSendVerificationEmail('a@b.c')).resolves.toBeUndefined();
+    expect(sendVerificationEmail).toHaveBeenCalledWith(expect.objectContaining({ email: 'a@b.c' }));
   });
 });
 

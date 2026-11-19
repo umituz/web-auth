@@ -11,6 +11,9 @@ export type { PasswordInputProps } from './PasswordInput';
 export { PasswordStrengthIndicator } from './PasswordStrengthIndicator';
 export type { PasswordStrengthIndicatorProps } from './PasswordStrengthIndicator';
 
+export { PasswordRequirements } from './PasswordRequirements';
+export type { PasswordRequirementsProps } from './PasswordRequirements';
+
 export { SocialLoginButtons } from './SocialLoginButtons';
 export type { SocialLoginButtonsProps, SocialProviderId } from './SocialLoginButtons';
 

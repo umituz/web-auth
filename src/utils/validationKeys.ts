@@ -8,6 +8,8 @@ export const AUTH_VALIDATION_KEYS = {
   nameRequired: 'auth.validation.nameRequired',
   emailTaken: 'auth.validation.emailTaken',
   invalidResetToken: 'auth.validation.invalidResetToken',
+  currentPasswordRequired: 'auth.validation.currentPasswordRequired',
+  passwordSameAsCurrent: 'auth.validation.passwordSameAsCurrent',
 } as const;
 
 export type AuthValidationKey = (typeof AUTH_VALIDATION_KEYS)[keyof typeof AUTH_VALIDATION_KEYS];

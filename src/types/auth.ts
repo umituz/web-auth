@@ -274,3 +274,8 @@ export interface MagicLinkVerifyPageProps {
   onVerified?: (user: SessionUser) => void | Promise<void>;
   translate?: Translate;
 }
+
+export type { ChangePasswordFormProps } from '../components/ChangePasswordForm';
+export type { DeleteAccountDialogProps } from '../components/DeleteAccountDialog';
+export type { ActiveSessionsListProps, ActiveSession } from '../components/ActiveSessionsList';
+export type { PasswordRule, PasswordEvaluation, PasswordRulesOptions, PasswordRuleId } from '../utils/passwordRules';

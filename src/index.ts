@@ -18,6 +18,15 @@ export {
   type LegalDoc,
   type LegalSection,
   type LegalPageProps,
+  ChangePasswordForm,
+  type ChangePasswordFormProps,
+  DeleteAccountDialog,
+  type DeleteAccountDialogProps,
+  ActiveSessionsList,
+  type ActiveSessionsListProps,
+  type ActiveSession,
+  PasswordRequirements,
+  type PasswordRequirementsProps,
 } from "./components";
 
 export { useAuth, type AuthProvider } from "./hooks";
@@ -41,6 +50,8 @@ export {
   sanitizeInput,
   resolveHomeRoute,
   groupDemoUsers,
+  evaluatePasswordRules,
+  validateChangePassword,
   AUTH_KEYS,
   AUTH_VALIDATION_KEYS,
   authT,

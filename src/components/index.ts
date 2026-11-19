@@ -13,3 +13,7 @@ export { MagicLinkVerifyPage } from "./MagicLinkVerifyPage";
 export { AuthRedirect, type AuthRedirectProps } from "./AuthRedirect";
 export { PasswordLoginPage, type PasswordLoginPageProps } from "./PasswordLoginPage";
 export { LegalPage, type LegalDoc, type LegalSection, type LegalPageProps } from "./LegalPage";
+export { ChangePasswordForm, type ChangePasswordFormProps } from "./ChangePasswordForm";
+export { DeleteAccountDialog, type DeleteAccountDialogProps } from "./DeleteAccountDialog";
+export { ActiveSessionsList, type ActiveSessionsListProps, type ActiveSession } from "./ActiveSessionsList";
+export { PasswordRequirements, type PasswordRequirementsProps } from "./shared/PasswordRequirements";

@@ -105,6 +105,45 @@ export const AUTH_KEYS = {
     showPassword: 'auth.a11y.showPassword',
     hidePassword: 'auth.a11y.hidePassword',
   },
+
+  changePassword: {
+    title: 'auth.changePassword.title',
+    subtitle: 'auth.changePassword.subtitle',
+    currentPassword: 'auth.changePassword.currentPassword',
+    newPassword: 'auth.changePassword.newPassword',
+    confirmPassword: 'auth.changePassword.confirmPassword',
+    revokeOthers: 'auth.changePassword.revokeOthers',
+    submit: 'auth.changePassword.submit',
+    submitting: 'auth.changePassword.submitting',
+    success: 'auth.changePassword.success',
+  },
+
+  deleteAccount: {
+    title: 'auth.deleteAccount.title',
+    warning: 'auth.deleteAccount.warning',
+    confirmPrompt: 'auth.deleteAccount.confirmPrompt',
+    confirmButton: 'auth.deleteAccount.confirmButton',
+    cancelButton: 'auth.deleteAccount.cancelButton',
+    deleting: 'auth.deleteAccount.deleting',
+  },
+
+  sessions: {
+    title: 'auth.sessions.title',
+    subtitle: 'auth.sessions.subtitle',
+    current: 'auth.sessions.current',
+    revoke: 'auth.sessions.revoke',
+    revokeAllOthers: 'auth.sessions.revokeAllOthers',
+    revoking: 'auth.sessions.revoking',
+    empty: 'auth.sessions.empty',
+  },
+
+  passwordRules: {
+    minLength: 'auth.passwordRules.minLength',
+    hasLower: 'auth.passwordRules.hasLower',
+    hasUpper: 'auth.passwordRules.hasUpper',
+    hasNumber: 'auth.passwordRules.hasNumber',
+    hasSpecial: 'auth.passwordRules.hasSpecial',
+  },
 } as const;
 
 export type AuthI18nKey = string;

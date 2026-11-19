@@ -26,3 +26,11 @@ export { AUTH_KEYS } from "./i18nKeys";
 export { authT, createAuthT, useAuthT, AuthI18nProvider, AuthI18nContext, defaultT } from "./messages";
 export { AUTH_VALIDATION_KEYS } from "./validationKeys";
 export type { AuthValidationKey } from "./validationKeys";
+export {
+  evaluatePasswordRules,
+  validateChangePassword,
+  type PasswordRule,
+  type PasswordEvaluation,
+  type PasswordRulesOptions,
+  type ValidateChangePasswordInput,
+} from "./passwordRules";

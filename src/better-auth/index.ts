@@ -87,3 +87,67 @@ export async function betterAuthResetPassword(data: { token: string; password: s
     throw new Error('auth.validation.invalidResetToken');
   }
 }
+
+export async function betterAuthChangePassword(
+  data: { currentPassword: string; newPassword: string; revokeOtherSessions?: boolean },
+  baseURL?: string,
+): Promise<void> {
+  const client = clientOf(baseURL);
+  const { error } = await client.changePassword({
+    currentPassword: data.currentPassword,
+    newPassword: data.newPassword,
+    revokeOtherSessions: data.revokeOtherSessions ?? true,
+  });
+  if (error) {
+    throw new Error(
+      error.code === 'INVALID_PASSWORD'
+        ? 'auth.errors.invalidCurrentPassword'
+        : 'auth.errors.changePasswordFailed',
+    );
+  }
+}
+
+export async function betterAuthRevokeOtherSessions(baseURL?: string): Promise<void> {
+  const client = clientOf(baseURL);
+  const { error } = await client.revokeOtherSessions();
+  if (error) {
+    throw new Error('auth.errors.revokeSessionsFailed');
+  }
+}
+
+export async function betterAuthListSessions(baseURL?: string): Promise<Array<{
+  id: string;
+  token?: string;
+  userAgent?: string;
+  ipAddress?: string;
+  createdAt?: string | number;
+  expiresAt?: string | number;
+}>> {
+  const client = clientOf(baseURL);
+  const { data, error } = await client.listSessions();
+  if (error || !data) return [];
+  return Array.isArray(data) ? (data as never) : [];
+}
+
+export async function betterAuthRevokeSession(token: string, baseURL?: string): Promise<void> {
+  const client = clientOf(baseURL);
+  const { error } = await client.revokeSession({ token });
+  if (error) {
+    throw new Error('auth.errors.revokeSessionFailed');
+  }
+}
+
+export async function betterAuthSendVerificationEmail(
+  email: string,
+  callbackURL?: string,
+  baseURL?: string,
+): Promise<void> {
+  const client = clientOf(baseURL);
+  const { error } = await client.sendVerificationEmail({
+    email,
+    callbackURL: callbackURL ?? (typeof location !== 'undefined' ? location.origin : undefined),
+  });
+  if (error) {
+    throw new Error('auth.errors.sendVerificationFailed');
+  }
+}
