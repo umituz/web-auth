@@ -27,6 +27,11 @@ export {
   type ActiveSession,
   PasswordRequirements,
   type PasswordRequirementsProps,
+  CookieBanner,
+  type CookieBannerProps,
+  TermsConsentModal,
+  type TermsConsentModalProps,
+  type ConsentPayload,
 } from "./components";
 
 export { useAuth, type AuthProvider } from "./hooks";
@@ -52,6 +57,17 @@ export {
   groupDemoUsers,
   evaluatePasswordRules,
   validateChangePassword,
+  createRateLimiter,
+  createBruteForceGuard,
+  detectSuspiciousLogin,
+  sanitizeSensitiveData,
+  validateAgeEligibility,
+  buildUserDataExport,
+  getStoredCookiePreferences,
+  saveCookiePreferences,
+  hasUserGivenCookieConsent,
+  COOKIE_CONSENT_STORAGE_KEY,
+  DEFAULT_COOKIE_PREFERENCES,
   AUTH_KEYS,
   AUTH_VALIDATION_KEYS,
   authT,
@@ -63,6 +79,18 @@ export {
   type ValidationResult,
   type PasswordStrengthBand,
   type AuthValidationKey,
+  type RateLimitOptions,
+  type RateLimitResult,
+  type RateLimiter,
+  type BruteForceOptions,
+  type BruteForceResult,
+  type BruteForceGuard,
+  type SuspiciousRiskLevel,
+  type SessionFootprint,
+  type SuspiciousLoginAnalysis,
+  type AgeEligibilityResult,
+  type UserDataExport,
+  type CookiePreferences,
 } from "./utils";
 
 export type { DemoUser, Tenant } from "./session";

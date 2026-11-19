@@ -155,6 +155,31 @@ const MESSAGES: Record<string, string> = {
 
   'session.demoLogin.action': 'Continue as {{userId}}',
   'session.orgSwitcher.label': 'Switch organization',
+
+  'auth.cookies.title': 'Cookie preferences',
+  'auth.cookies.description': 'We use cookies to enhance your experience, analyze site usage, and ensure security.',
+  'auth.cookies.privacyLink': 'Privacy Policy',
+  'auth.cookies.essentialTitle': 'Essential cookies',
+  'auth.cookies.essentialDesc': 'Required for session authentication and basic security features.',
+  'auth.cookies.alwaysActive': 'Always active',
+  'auth.cookies.analyticsTitle': 'Analytics cookies',
+  'auth.cookies.analyticsDesc': 'Help us understand how visitors interact with the site anonymously.',
+  'auth.cookies.marketingTitle': 'Marketing cookies',
+  'auth.cookies.marketingDesc': 'Allow us to tailor relevant features and updates to you.',
+  'auth.cookies.customize': 'Customize',
+  'auth.cookies.hideDetails': 'Hide details',
+  'auth.cookies.savePreferences': 'Save preferences',
+  'auth.cookies.rejectAll': 'Essential only',
+  'auth.cookies.acceptAll': 'Accept all',
+
+  'auth.consent.title': 'Updated Terms of Service and Privacy',
+  'auth.consent.intro': 'Please review and accept our updated agreements to continue using the service.',
+  'auth.consent.termsLink': 'Terms of Service',
+  'auth.consent.privacyLink': 'Privacy & Data Protection Notice',
+  'auth.consent.mandatorySuffix': 'I have read and agree to this. *',
+  'auth.consent.marketing': 'I would like to receive product updates and announcements via email (Optional).',
+  'auth.consent.cancel': 'Cancel',
+  'auth.consent.confirm': 'Accept and continue',
 };
 
 const WORD_SPLIT = /[._-]+|(?<=[a-z0-9])(?=[A-Z])/g;

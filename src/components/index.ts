@@ -1,4 +1,3 @@
-
 export { AuthLayout } from "./AuthLayout";
 export { LoginForm } from "./LoginForm";
 export { PasswordlessForm } from "./PasswordlessForm";
@@ -17,3 +16,5 @@ export { ChangePasswordForm, type ChangePasswordFormProps } from "./ChangePasswo
 export { DeleteAccountDialog, type DeleteAccountDialogProps } from "./DeleteAccountDialog";
 export { ActiveSessionsList, type ActiveSessionsListProps, type ActiveSession } from "./ActiveSessionsList";
 export { PasswordRequirements, type PasswordRequirementsProps } from "./shared/PasswordRequirements";
+export { CookieBanner, type CookieBannerProps } from "./CookieBanner";
+export { TermsConsentModal, type TermsConsentModalProps, type ConsentPayload } from "./TermsConsentModal";

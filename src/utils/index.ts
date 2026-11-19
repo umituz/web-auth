@@ -34,3 +34,35 @@ export {
   type PasswordRulesOptions,
   type ValidateChangePasswordInput,
 } from "./passwordRules";
+
+export {
+  createRateLimiter,
+  createBruteForceGuard,
+  type RateLimitOptions,
+  type RateLimitResult,
+  type RateLimiter,
+  type BruteForceOptions,
+  type BruteForceResult,
+  type BruteForceGuard,
+} from "./rateLimit";
+
+export {
+  detectSuspiciousLogin,
+  sanitizeSensitiveData,
+  validateAgeEligibility,
+  buildUserDataExport,
+  type SuspiciousRiskLevel,
+  type SessionFootprint,
+  type SuspiciousLoginAnalysis,
+  type AgeEligibilityResult,
+  type UserDataExport,
+} from "./securityAudit";
+
+export {
+  getStoredCookiePreferences,
+  saveCookiePreferences,
+  hasUserGivenCookieConsent,
+  COOKIE_CONSENT_STORAGE_KEY,
+  DEFAULT_COOKIE_PREFERENCES,
+  type CookiePreferences,
+} from "./cookieConsent";
