@@ -37,6 +37,17 @@ export {
 export { useAuth, type AuthProvider } from "./hooks";
 
 export {
+  ConsentGate,
+  type ConsentGateProps,
+  createConsentClient,
+  type ConsentClient,
+  type ConsentClientOptions,
+  type ConsentFetchJson,
+  type ConsentRecord,
+  type SessionEntry,
+} from "./consent";
+
+export {
   isValidEmail,
   isValidPassword,
   validateLogin,
