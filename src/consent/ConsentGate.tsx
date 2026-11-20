@@ -2,6 +2,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { Spinner } from "@umituz/web-design-system/atoms";
 import { useSession } from "../session";
 import { TermsConsentModal } from "../components";
+import type { Translate } from "../types/auth";
 import { createConsentClient, type ConsentFetchJson, type ConsentRecord } from "./service";
 
 export interface ConsentGateProps {
@@ -11,6 +12,7 @@ export interface ConsentGateProps {
   loginRoute?: string;
   basePath?: string;
   fetchJson?: ConsentFetchJson;
+  translate?: Translate;
   children: ReactNode;
 }
 
@@ -21,6 +23,7 @@ export const ConsentGate = ({
   loginRoute = "/login",
   basePath,
   fetchJson,
+  translate,
   children,
 }: ConsentGateProps) => {
   const { user, status, logout } = useSession();
@@ -83,6 +86,7 @@ export const ConsentGate = ({
       busy={busy}
       termsUrl={termsUrl}
       privacyUrl={privacyUrl}
+      translate={translate}
       onConfirm={async (payload) => {
         setBusy(true);
         try {
