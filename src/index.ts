@@ -32,6 +32,8 @@ export {
   TermsConsentModal,
   type TermsConsentModalProps,
   type ConsentPayload,
+  SessionsCard,
+  type SessionsCardProps,
 } from "./components";
 
 export { useAuth, type AuthProvider } from "./hooks";
