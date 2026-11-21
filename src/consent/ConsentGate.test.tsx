@@ -107,4 +107,20 @@ describe("ConsentGate", () => {
 
     await waitFor(() => expect(screen.getByText("app content")).toBeTruthy());
   });
+
+  it("uses DEFAULT_TERMS_VERSION when termsVersion prop is omitted", async () => {
+    const fetchJson = consentResponse({
+      consent: { id: "c-def", version: "2026-11-20", termsAccepted: true, kvkkAccepted: true, marketingAccepted: false },
+    });
+    render(
+      <SessionProvider adapter={authenticatedAdapter()}>
+        <ConsentGate fetchJson={fetchJson}>
+          <p>app content default version</p>
+        </ConsentGate>
+      </SessionProvider>,
+    );
+
+    await waitFor(() => expect(screen.getByText("app content default version")).toBeTruthy());
+    expect(screen.queryByRole("dialog")).toBeNull();
+  });
 });

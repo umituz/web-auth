@@ -44,6 +44,7 @@ export { useAuth, type AuthProvider } from "./hooks";
 
 export {
   ConsentGate,
+  DEFAULT_TERMS_VERSION,
   type ConsentGateProps,
   createConsentClient,
   type ConsentClient,

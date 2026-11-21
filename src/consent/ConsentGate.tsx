@@ -5,8 +5,10 @@ import { TermsConsentModal } from "../components";
 import type { Translate } from "../types/auth";
 import { createConsentClient, type ConsentFetchJson, type ConsentRecord } from "./service";
 
+export const DEFAULT_TERMS_VERSION = "2026-11-20";
+
 export interface ConsentGateProps {
-  termsVersion: string;
+  termsVersion?: string;
   termsUrl?: string;
   privacyUrl?: string;
   loginRoute?: string;
@@ -17,7 +19,7 @@ export interface ConsentGateProps {
 }
 
 export const ConsentGate = ({
-  termsVersion,
+  termsVersion = DEFAULT_TERMS_VERSION,
   termsUrl,
   privacyUrl,
   loginRoute = "/login",
