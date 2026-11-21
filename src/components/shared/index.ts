@@ -18,3 +18,6 @@ export { SocialLoginButtons } from './SocialLoginButtons';
 export type { SocialLoginButtonsProps, SocialProviderId } from './SocialLoginButtons';
 
 export { GoogleIcon, AppleIcon } from './SocialProviderIcons';
+
+export { TurnstileWidget } from './TurnstileWidget';
+export type { TurnstileWidgetProps } from './TurnstileWidget';

@@ -94,6 +94,7 @@ const MESSAGES: Record<string, string> = {
   'auth.errors.passwordTooShort': 'Password must be at least 8 characters.',
   'auth.errors.passwordsDoNotMatch': 'Passwords do not match.',
   'auth.errors.sendResetFailed': 'Could not send the reset email. Please try again.',
+  'auth.errors.captchaRequired': 'Please complete the verification to continue.',
   'auth.errors.resetFailed': 'Could not reset the password. Please try again.',
 
   'auth.passwordStrength.weak': 'Weak',

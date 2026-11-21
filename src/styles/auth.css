@@ -1073,3 +1073,9 @@
   font-size: var(--uauth-font-size-sm);
   color: var(--color-muted-foreground);
 }
+
+.uauth-turnstile {
+  display: flex;
+  justify-content: center;
+  margin: var(--uauth-space-3) 0;
+}

@@ -8,7 +8,7 @@ import { validateForgotPassword } from "../utils/auth";
 import { authErrorMessage } from "../utils/errors";
 import { AUTH_KEYS } from "../utils/i18nKeys";
 import { AUTH_VALIDATION_KEYS } from "../utils/validationKeys";
-import { AuthErrorBanner, EmailInput } from "./shared";
+import { AuthErrorBanner, EmailInput, TurnstileWidget } from "./shared";
 
 const KEYS = {
   title: 'auth.forgotPassword.title',
@@ -26,6 +26,7 @@ const KEYS = {
   step3: 'auth.forgotPassword.steps.step3',
   invalidEmail: AUTH_VALIDATION_KEYS.emailInvalid,
   sendResetFailed: 'auth.errors.sendResetFailed',
+  captchaRequired: 'auth.errors.captchaRequired',
 } as const;
 
 export const ForgotPasswordForm = ({
@@ -33,6 +34,7 @@ export const ForgotPasswordForm = ({
   onSuccess,
   onError,
   showBackLink = true,
+  captchaSiteKey,
 }: ForgotPasswordFormProps) => {
   const navigate = useNavigate();
   const t = useAuthT();
@@ -42,6 +44,8 @@ export const ForgotPasswordForm = ({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaKey, setCaptchaKey] = useState<number>(0);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,14 +59,24 @@ export const ForgotPasswordForm = ({
       return;
     }
 
+    if (captchaSiteKey && !captchaToken) {
+      setError(KEYS.captchaRequired);
+      onError?.(KEYS.captchaRequired);
+      return;
+    }
+
     setIsLoading(true);
     try {
-      await onSuccess?.({ email });
+      await onSuccess?.({ email, captchaToken: captchaToken ?? undefined });
       setSuccess(true);
     } catch (err) {
       const message = authErrorMessage(err, KEYS.sendResetFailed);
       setError(message);
       onError?.(message);
+      if (captchaSiteKey) {
+        setCaptchaToken(null);
+        setCaptchaKey((key) => key + 1);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -135,6 +149,10 @@ export const ForgotPasswordForm = ({
         disabled={isLoading}
         required
       />
+
+      {captchaSiteKey && (
+        <TurnstileWidget key={captchaKey} siteKey={captchaSiteKey} onToken={setCaptchaToken} />
+      )}
 
       <Button
         type="submit"

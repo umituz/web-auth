@@ -15,6 +15,7 @@ import {
   PasswordInput,
   PasswordStrengthIndicator,
   SocialLoginButtons,
+  TurnstileWidget,
 } from "./shared";
 
 const KEYS = {
@@ -39,6 +40,7 @@ const KEYS = {
   invalidData: 'auth.errors.registrationFailed',
   mustAcceptTerms: 'auth.register.mustAcceptTerms',
   passwordsDoNotMatch: AUTH_VALIDATION_KEYS.passwordsDoNotMatch,
+  captchaRequired: 'auth.errors.captchaRequired',
 } as const;
 
 export const RegisterForm = ({
@@ -61,6 +63,7 @@ export const RegisterForm = ({
   onRegisterError,
   onGoogleLogin,
   onAppleLogin,
+  captchaSiteKey,
 }: RegisterFormProps) => {
   const navigate = useNavigate();
   const t = useAuthT();
@@ -74,6 +77,8 @@ export const RegisterForm = ({
   const [extraValues, setExtraValues] = useState<Record<string, string>>(initialValues ?? {});
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaKey, setCaptchaKey] = useState<number>(0);
 
   useEffect(() => {
     onBusyChange?.(isLoading);
@@ -108,14 +113,20 @@ export const RegisterForm = ({
         return;
       }
 
+      if (captchaSiteKey && !captchaToken) {
+        setError(KEYS.captchaRequired);
+        onRegisterError?.(KEYS.captchaRequired);
+        return;
+      }
+
       setIsLoading(true);
       try {
         if (!onRegisterAttempt) {
           throw new Error('No register handler configured');
         }
         const registerData: RegisterData = extraFields
-          ? { email, password, name, metadata: extraValues }
-          : { email, password, name };
+          ? { email, password, name, metadata: extraValues, captchaToken: captchaToken ?? undefined }
+          : { email, password, name, captchaToken: captchaToken ?? undefined };
         const user = await onRegisterAttempt(registerData);
         await onRegisterSuccess?.(user);
         navigate(config.afterLoginRouteFor?.(user) ?? config.afterLoginRoute, {
@@ -125,12 +136,18 @@ export const RegisterForm = ({
         const message = authErrorMessage(err, KEYS.invalidData, statusKeys);
         setError(message);
         onRegisterError?.(message);
+        if (captchaSiteKey) {
+          setCaptchaToken(null);
+          setCaptchaKey((key) => key + 1);
+        }
       } finally {
         setIsLoading(false);
       }
     },
     [
       agreeToTerms,
+      captchaSiteKey,
+      captchaToken,
       config.afterLoginRoute,
       config.afterLoginRouteFor,
       navigateOptions,
@@ -266,6 +283,10 @@ export const RegisterForm = ({
 
       {extraFields &&
         extraFields({ values: extraValues, setValue: setExtraValue, disabled: isLoading })}
+
+      {captchaSiteKey && (
+        <TurnstileWidget key={captchaKey} siteKey={captchaSiteKey} onToken={setCaptchaToken} />
+      )}
 
       <Button
         type="submit"

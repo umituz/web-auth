@@ -18,3 +18,4 @@ export { ActiveSessionsList, type ActiveSessionsListProps, type ActiveSession } 
 export { PasswordRequirements, type PasswordRequirementsProps } from "./shared/PasswordRequirements";
 export { CookieBanner, type CookieBannerProps } from "./CookieBanner";
 export { TermsConsentModal, type TermsConsentModalProps, type ConsentPayload } from "./TermsConsentModal";
+export { TurnstileWidget, type TurnstileWidgetProps } from "./shared/TurnstileWidget";

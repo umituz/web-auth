@@ -31,6 +31,7 @@ vi.mock('better-auth/client', () => ({
 import { createAuthClient } from 'better-auth/client';
 import {
   betterAuthAdapter,
+  betterAuthForgotPassword,
   betterAuthRegister,
   betterAuthResetPassword,
   betterAuthChangePassword,
@@ -91,12 +92,49 @@ describe('betterAuthAdapter.logout', () => {
   });
 });
 
+describe('captcha token transport', () => {
+  it('sends the login token as the x-captcha-response header', async () => {
+    signInEmail.mockResolvedValue({ data: { user }, error: null });
+    const adapter = betterAuthAdapter({ role: 'member' });
+    await adapter.login({ email: 'a@b.c', password: 'pw', captchaToken: 'tok-login' });
+    expect(signInEmail).toHaveBeenCalledWith(
+      expect.objectContaining({ email: 'a@b.c' }),
+      { headers: { 'x-captcha-response': 'tok-login' } },
+    );
+  });
+
+  it('omits the header when no token is present', async () => {
+    signInEmail.mockResolvedValue({ data: { user }, error: null });
+    const adapter = betterAuthAdapter({ role: 'member' });
+    await adapter.login({ email: 'a@b.c', password: 'pw' });
+    expect(signInEmail).toHaveBeenCalledWith(expect.objectContaining({ email: 'a@b.c' }), undefined);
+  });
+
+  it('sends the register token as the x-captcha-response header', async () => {
+    signUpEmail.mockResolvedValue({ data: { user, token: 't' }, error: null });
+    await betterAuthRegister({ email: 'a@b.c', password: 'pw', captchaToken: 'tok-reg' });
+    expect(signUpEmail).toHaveBeenCalledWith(
+      expect.objectContaining({ email: 'a@b.c' }),
+      { headers: { 'x-captcha-response': 'tok-reg' } },
+    );
+  });
+
+  it('sends the password reset token as the x-captcha-response header', async () => {
+    requestPasswordReset.mockResolvedValue({ data: null, error: null });
+    await betterAuthForgotPassword('a@b.c', '/reset-password', undefined, 'tok-forgot');
+    expect(requestPasswordReset).toHaveBeenCalledWith(
+      expect.objectContaining({ email: 'a@b.c' }),
+      { headers: { 'x-captcha-response': 'tok-forgot' } },
+    );
+  });
+});
+
 describe('betterAuthRegister', () => {
   it('falls back to the email local-part when the name is empty', async () => {
     signUpEmail.mockResolvedValue({ data: { user, token: 't' }, error: null });
     const registered = await betterAuthRegister({ email: 'jane@x.y', password: 'pw', name: '  ' });
     expect(registered).toEqual({ id: 'u1', email: 'a@b.c', name: 'A B' });
-    expect(signUpEmail).toHaveBeenCalledWith(expect.objectContaining({ name: 'jane' }));
+    expect(signUpEmail).toHaveBeenCalledWith(expect.objectContaining({ name: 'jane' }), undefined);
   });
 
   it('throws the emailTaken key for duplicate sign-up', async () => {

@@ -7,6 +7,7 @@ export type Translate = (key: string, params?: Record<string, unknown>) => strin
 export interface LoginCredentials {
   email: string;
   password: string;
+  captchaToken?: string;
 }
 
 export interface RegisterData {
@@ -14,10 +15,12 @@ export interface RegisterData {
   password: string;
   name?: string;
   metadata?: Record<string, unknown>;
+  captchaToken?: string;
 }
 
 export interface ForgotPasswordData {
   email: string;
+  captchaToken?: string;
 }
 
 export interface ResetPasswordData {
@@ -168,6 +171,7 @@ export interface LoginFormProps {
   onLoginError?: (error: string) => void;
   onGoogleLogin?: () => void | Promise<void>;
   onAppleLogin?: () => void | Promise<void>;
+  captchaSiteKey?: string;
 }
 
 export interface RegisterExtraFieldsRenderArgs {
@@ -196,13 +200,15 @@ export interface RegisterFormProps {
   onRegisterError?: (error: string) => void;
   onGoogleLogin?: () => void | Promise<void>;
   onAppleLogin?: () => void | Promise<void>;
+  captchaSiteKey?: string;
 }
 
 export interface ForgotPasswordFormProps {
   config: AuthConfig;
-  onSuccess?: (data: { email: string }) => void | Promise<void>;
+  onSuccess?: (data: { email: string; captchaToken?: string }) => void | Promise<void>;
   onError?: (error: string) => void;
   showBackLink?: boolean;
+  captchaSiteKey?: string;
 }
 
 export interface ResetPasswordFormProps {

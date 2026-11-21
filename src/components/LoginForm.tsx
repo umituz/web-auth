@@ -16,6 +16,7 @@ import {
   EmailInput,
   PasswordInput,
   SocialLoginButtons,
+  TurnstileWidget,
 } from "./shared";
 
 const KEYS = {
@@ -35,6 +36,7 @@ const KEYS = {
   invalidCredentials: 'auth.errors.invalidCredentials',
   loginFailed: 'auth.errors.loginFailed',
   noAuthProvider: 'auth.errors.noAuthProvider',
+  captchaRequired: 'auth.errors.captchaRequired',
 } as const;
 
 export const LoginForm = ({
@@ -54,6 +56,7 @@ export const LoginForm = ({
   onLoginError,
   onGoogleLogin,
   onAppleLogin,
+  captchaSiteKey,
 }: LoginFormProps) => {
   const navigate = useNavigate();
   const t = useAuthT();
@@ -64,6 +67,8 @@ export const LoginForm = ({
   const [remember, setRemember] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaKey, setCaptchaKey] = useState<number>(0);
 
   useEffect(() => {
     onBusyChange?.(loading);
@@ -100,9 +105,15 @@ export const LoginForm = ({
         return;
       }
 
+      if (captchaSiteKey && !captchaToken) {
+        setError(KEYS.captchaRequired);
+        onLoginError?.(KEYS.captchaRequired);
+        return;
+      }
+
       setLoading(true);
       try {
-        const user = await performLogin({ email, password });
+        const user = await performLogin({ email, password, captchaToken: captchaToken ?? undefined });
         await onLoginSuccess?.(user);
         navigate(config.afterLoginRouteFor?.(user) ?? config.afterLoginRoute, {
           replace: navigateOptions?.replace,
@@ -115,6 +126,10 @@ export const LoginForm = ({
         });
         setError(message);
         onLoginError?.(message);
+        if (captchaSiteKey) {
+          setCaptchaToken(null);
+          setCaptchaKey((key) => key + 1);
+        }
       } finally {
         setLoading(false);
       }
@@ -122,6 +137,8 @@ export const LoginForm = ({
     [
       email,
       password,
+      captchaToken,
+      captchaSiteKey,
       performLogin,
       navigate,
       config.afterLoginRoute,
@@ -177,6 +194,10 @@ export const LoginForm = ({
         disabled={loading}
         required
       />
+
+      {captchaSiteKey && (
+        <TurnstileWidget key={captchaKey} siteKey={captchaSiteKey} onToken={setCaptchaToken} />
+      )}
 
       {(showRememberMe || showForgotPassword) && (
         <div className="uauth-form__row">
