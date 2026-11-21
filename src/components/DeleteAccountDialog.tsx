@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AlertTriangle, Loader2 } from 'lucide-react';
 import { Button, Input } from '@umituz/web-design-system/atoms';
 import { cn } from '@umituz/web-design-system/utils/cn';
@@ -45,6 +45,15 @@ export const DeleteAccountDialog = ({
   const t = translate ?? defaultT;
 
   const [confirmInput, setConfirmInput] = useState('');
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && !busy) onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isOpen, busy, onClose]);
 
   if (!isOpen) return null;
 
