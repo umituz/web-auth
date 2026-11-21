@@ -34,6 +34,10 @@ export {
   type ConsentPayload,
   SessionsCard,
   type SessionsCardProps,
+  AuthBrandPanel,
+  type AuthBrandPanelProps,
+  type AuthBrandStat,
+  type AuthBrandNote,
 } from "./components";
 
 export { useAuth, type AuthProvider } from "./hooks";

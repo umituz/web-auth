@@ -19,4 +19,10 @@ export { PasswordRequirements, type PasswordRequirementsProps } from "./shared/P
 export { CookieBanner, type CookieBannerProps } from "./CookieBanner";
 export { TermsConsentModal, type TermsConsentModalProps, type ConsentPayload } from "./TermsConsentModal";
 export { SessionsCard, type SessionsCardProps } from "./SessionsCard";
+export {
+  AuthBrandPanel,
+  type AuthBrandPanelProps,
+  type AuthBrandStat,
+  type AuthBrandNote,
+} from "./AuthBrandPanel";
 export { TurnstileWidget, type TurnstileWidgetProps } from "./shared/TurnstileWidget";
