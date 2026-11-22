@@ -1,7 +1,7 @@
 {
   "name": "@umituz/web-auth",
   "version": "3.8.0",
-  "description": "Frontend auth module for the fleet — AuthLayout, Login/Register/Forgot/Reset forms, LegalPage shell for terms/privacy docs (content stays in the app), SessionProvider with an AuthAdapter seam, org switcher, demo login, ready-made better-auth client adapter + form actions; uauth-* stylesheet on design-system tokens",
+  "description": "Auth module for the fleet — client: AuthLayout, Login/Register/Forgot/Reset forms, LegalPage shell for terms/privacy docs (content stays in the app), SessionProvider with an AuthAdapter seam, org switcher, demo login, ready-made better-auth client adapter + form actions; uauth-* stylesheet on design-system tokens; server (./server): better-auth tables/getter/mount, consent + sessions routes, session helpers",
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -16,6 +16,7 @@
     "./types": "./src/types/index.ts",
     "./session": "./src/session/index.ts",
     "./consent": "./src/consent/index.ts",
+    "./server": "./src/server/index.ts",
     "./better-auth": "./src/better-auth/index.ts",
     "./styles.css": "./src/styles/auth.css",
     "./package.json": "./package.json"
@@ -37,17 +38,29 @@
   },
   "peerDependencies": {
     "@umituz/web-design-system": ">=6.0.0",
-    "@umituz/web-hono": ">=1.25.0",
+    "@umituz/web-hono": ">=2.0.0",
     "better-auth": "^1.7.0",
+    "drizzle-orm": "^0.45.4",
+    "hono": "^4.0.0",
     "react": ">=18.0.0 || ^19.0.0",
     "react-dom": ">=18.0.0 || ^19.0.0",
-    "react-router": ">=6.0.0 || ^7.0.0"
+    "react-router": ">=6.0.0 || ^7.0.0",
+    "zod": "^4.0.0"
   },
   "peerDependenciesMeta": {
     "better-auth": {
       "optional": true
     },
+    "drizzle-orm": {
+      "optional": true
+    },
+    "hono": {
+      "optional": true
+    },
     "react-router": {
+      "optional": true
+    },
+    "zod": {
       "optional": true
     }
   },
@@ -55,6 +68,7 @@
     "lucide-react": "^0.577.0"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.17",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/react": "^16.3.3",
     "@types/node": "^22.20.5",
@@ -62,13 +76,16 @@
     "@types/react-dom": "^19.2.3",
     "@typescript-eslint/eslint-plugin": "^8.57.2",
     "@typescript-eslint/parser": "^8.57.2",
-    "@umituz/web-hono": "^1.25.2",
+    "@umituz/web-hono": "^2.0.0",
     "better-auth": "^1.7.12",
+    "drizzle-orm": "^0.45.4",
     "eslint": "^10.0.2",
+    "hono": "^4.13.20",
     "jsdom": "^29.1.1",
     "react-router": "^7.13.1",
     "typescript": "^5.9.3",
-    "vitest": "^5.0.1"
+    "vitest": "^5.0.1",
+    "zod": "^4.6.7"
   },
   "keywords": [
     "auth",
