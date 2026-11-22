@@ -37,4 +37,18 @@ describe('TermsConsentModal', () => {
       version: '2026.11',
     });
   });
+
+  it('surfaces an error and re-enables the dialog when onConfirm rejects', async () => {
+    const onConfirm = vi.fn().mockRejectedValue(new Error('boom'));
+    render(<TermsConsentModal isOpen={true} termsVersion="2026.11" onConfirm={onConfirm} />);
+
+    fireEvent.click(screen.getByLabelText('Kullanım Koşulları Onayı'));
+    fireEvent.click(screen.getByLabelText('KVKK ve Gizlilik Onayı'));
+    const submitBtn = screen.getByRole('button', { name: /accept and continue|confirm|onayla/i }) as HTMLButtonElement;
+    fireEvent.click(submitBtn);
+
+    const alert = await screen.findByRole('alert');
+    expect(alert.textContent).toContain('We could not save your consent');
+    expect(submitBtn.disabled).toBe(false);
+  });
 });

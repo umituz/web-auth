@@ -3,6 +3,7 @@ import { Button } from '@umituz/web-design-system/atoms';
 import { cn } from '@umituz/web-design-system/utils/cn';
 import { useAuthT } from '../utils/messages';
 import type { Translate } from '../types/auth';
+import { AuthErrorBanner } from './shared/AuthErrorBanner';
 
 export interface ConsentPayload {
   termsAccepted: boolean;
@@ -39,6 +40,7 @@ export const TermsConsentModal = ({
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [kvkkAccepted, setKvkkAccepted] = useState(false);
   const [marketingAccepted, setMarketingAccepted] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   if (!isOpen) return null;
 
@@ -47,12 +49,17 @@ export const TermsConsentModal = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!canSubmit) return;
-    await onConfirm({
-      termsAccepted,
-      kvkkAccepted,
-      marketingAccepted,
-      version: termsVersion,
-    });
+    setFailed(false);
+    try {
+      await onConfirm({
+        termsAccepted,
+        kvkkAccepted,
+        marketingAccepted,
+        version: termsVersion,
+      });
+    } catch {
+      setFailed(true);
+    }
   };
 
   return (
@@ -137,6 +144,8 @@ export const TermsConsentModal = ({
               </span>
             </label>
           </div>
+
+          {failed && <AuthErrorBanner message="auth.consent.error" translate={t} />}
 
           <div className="flex items-center justify-end gap-3 pt-2">
             {onCancel && (

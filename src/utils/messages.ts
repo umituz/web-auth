@@ -181,6 +181,7 @@ const MESSAGES: Record<string, string> = {
   'auth.consent.marketing': 'I would like to receive product updates and announcements via email (Optional).',
   'auth.consent.cancel': 'Cancel',
   'auth.consent.confirm': 'Accept and continue',
+  'auth.consent.error': 'We could not save your consent. Please try again.',
 };
 
 const WORD_SPLIT = /[._-]+|(?<=[a-z0-9])(?=[A-Z])/g;
