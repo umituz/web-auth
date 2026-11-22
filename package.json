@@ -37,6 +37,7 @@
   },
   "peerDependencies": {
     "@umituz/web-design-system": ">=6.0.0",
+    "@umituz/web-hono": ">=1.25.0",
     "better-auth": "^1.7.0",
     "react": ">=18.0.0 || ^19.0.0",
     "react-dom": ">=18.0.0 || ^19.0.0",
@@ -61,6 +62,7 @@
     "@types/react-dom": "^19.2.3",
     "@typescript-eslint/eslint-plugin": "^8.57.2",
     "@typescript-eslint/parser": "^8.57.2",
+    "@umituz/web-hono": "^1.25.2",
     "better-auth": "^1.7.12",
     "eslint": "^10.0.2",
     "jsdom": "^29.1.1",

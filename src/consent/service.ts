@@ -1,3 +1,4 @@
+import { apiFetch } from "@umituz/web-hono/client";
 import type { ConsentPayload } from "../components";
 
 export interface ConsentRecord {
@@ -32,7 +33,7 @@ export interface ConsentClient {
 
 export type ConsentFetchJson = (
   path: string,
-  init?: { method?: string; json?: unknown },
+  init?: { method?: "POST" | "PATCH" | "PUT" | "DELETE"; json?: unknown },
 ) => Promise<unknown>;
 
 export interface ConsentClientOptions {
@@ -42,29 +43,6 @@ export interface ConsentClientOptions {
 
 const DEFAULT_BASE_PATH = "/api/auth";
 
-async function defaultFetchJson(
-  path: string,
-  init?: { method?: string; json?: unknown },
-): Promise<unknown> {
-  const hasBody = init?.json !== undefined;
-  const res = await fetch(path, {
-    method: init?.method ?? "GET",
-    headers: hasBody
-      ? { accept: "application/json", "content-type": "application/json" }
-      : { accept: "application/json" },
-    body: hasBody ? JSON.stringify(init?.json) : undefined,
-    credentials: "same-origin",
-  });
-  const data: unknown = await res.json().catch(() => null);
-  if (!res.ok) {
-    const detail = data as { message?: string; error?: string } | null;
-    const message =
-      detail?.message ?? detail?.error ?? `Request failed (${res.status})`;
-    throw new Error(message);
-  }
-  return data;
-}
-
 type WireSession = { id: string } & {
   [K in Exclude<keyof SessionEntry, "id">]: SessionEntry[K] | null;
 };
@@ -73,7 +51,7 @@ export function createConsentClient(
   options: ConsentClientOptions = {},
 ): ConsentClient {
   const base = options.basePath ?? DEFAULT_BASE_PATH;
-  const fetchJson = options.fetchJson ?? defaultFetchJson;
+  const fetchJson: ConsentFetchJson = options.fetchJson ?? apiFetch;
 
   return {
     fetchLatestConsent: () =>
