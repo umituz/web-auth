@@ -82,6 +82,22 @@ function authTableSet(prefix: string) {
 export const authTables = authTableSet;
 export type AuthTables = ReturnType<typeof authTableSet>;
 
+export function authDdl(prefix: string): string[] {
+  const t = (name: string) => `${prefix}_ba_${name}`;
+  const idx = (table: string, name: string) => `${prefix}_ba_${table}_${name}_idx`;
+  const time = 'created_at timestamptz not null default now(), updated_at timestamptz not null default now()';
+  return [
+    `create table if not exists "${t('user')}" (id text primary key, name text not null, email text not null unique, email_verified boolean not null default false, image text, ${time})`,
+    `create table if not exists "${t('session')}" (id text primary key, expires_at timestamptz not null, token text not null unique, ip_address text, user_agent text, user_id text not null references "${t('user')}"(id) on delete cascade, ${time})`,
+    `create table if not exists "${t('account')}" (id text primary key, account_id text not null, provider_id text not null, user_id text not null references "${t('user')}"(id) on delete cascade, access_token text, refresh_token text, id_token text, access_token_expires_at timestamptz, refresh_token_expires_at timestamptz, scope text, password text, ${time})`,
+    `create table if not exists "${t('verification')}" (id text primary key, identifier text not null, value text not null, expires_at timestamptz not null, ${time})`,
+    `create index if not exists "${idx('session', 'user')}" on "${t('session')}" (user_id)`,
+    `create index if not exists "${idx('account', 'user')}" on "${t('account')}" (user_id)`,
+    `create unique index if not exists "${idx('account', 'provider_account')}" on "${t('account')}" (provider_id, account_id)`,
+    `create index if not exists "${idx('verification', 'identifier')}" on "${t('verification')}" (identifier)`,
+  ];
+}
+
 type DbLike = Parameters<typeof drizzleAdapter>[0];
 
 export interface ResetPasswordArgs {

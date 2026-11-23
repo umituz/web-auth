@@ -3,7 +3,7 @@ import { getTableName } from 'drizzle-orm';
 import { PGlite } from '@electric-sql/pglite';
 import { drizzle } from 'drizzle-orm/pglite';
 import { Hono } from 'hono';
-import { consentDdl, consentSchema, consentTable, mountAuthApi } from './index';
+import { authDdl, consentDdl, consentSchema, consentTable, mountAuthApi } from './index';
 import type { AuthEnv, AuthInstance } from './index';
 
 const table = consentTable('wh');
@@ -34,6 +34,21 @@ describe('consentDdl', () => {
     expect(ddl).toHaveLength(2);
     expect(ddl[0]).toContain('create table if not exists "pkg_user_consents"');
     expect(ddl[1]).toContain('create index if not exists "pkg_user_consents_user_idx"');
+  });
+});
+
+describe('authDdl', () => {
+  it('returns idempotent statements for the prefix', async () => {
+    const ddl = authDdl('pkg');
+    expect(ddl).toHaveLength(8);
+    expect(ddl[0]).toContain('create table if not exists "pkg_ba_user"');
+    expect(ddl[3]).toContain('create table if not exists "pkg_ba_verification"');
+    expect(ddl[7]).toContain('create index if not exists "pkg_ba_verification_identifier_idx"');
+    const pg = new PGlite();
+    await pg.exec(ddl.join(';\n'));
+    await pg.exec(ddl.join(';\n'));
+    const res = await pg.query(`select count(*)::int as n from pg_tables where tablename like 'pkg_ba%'`);
+    expect((res.rows[0] as { n: number }).n).toBe(4);
   });
 });
 
