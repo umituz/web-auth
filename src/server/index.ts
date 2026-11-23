@@ -284,6 +284,11 @@ export interface SessionUserInfo {
   name: string;
 }
 
+export interface SessionActor {
+  actorId: string;
+  actorName: string;
+}
+
 export function createSessionHelpers<E extends AuthEnv>(getAuth: (env: E) => AuthInstance) {
   async function currentUser(c: AuthContext<E>): Promise<SessionUserInfo | null> {
     const session = await getAuth(c.env).api.getSession({ headers: c.req.raw.headers });
@@ -293,5 +298,9 @@ export function createSessionHelpers<E extends AuthEnv>(getAuth: (env: E) => Aut
   async function scopeOf(c: AuthContext<E>): Promise<string | null> {
     return (await currentUser(c))?.id ?? null;
   }
-  return { currentUser, scopeOf };
+  async function actorOf(c: AuthContext<E>): Promise<SessionActor | null> {
+    const user = await currentUser(c);
+    return user ? { actorId: user.id, actorName: user.name.trim() || 'System' } : null;
+  }
+  return { currentUser, scopeOf, actorOf };
 }
