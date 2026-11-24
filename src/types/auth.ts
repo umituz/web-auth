@@ -256,6 +256,11 @@ export interface DemoUserPickerProps {
   searchPlaceholder?: string;
   orgs?: Tenant[];
   onPickPair?: (pick: DemoUserPick) => void | Promise<void>;
+  /** Secondary line under each name: the role label (default) or the email,
+   *  falling back to the role when the user has no email. */
+  metaFrom?: "role" | "email";
+  /** Rendered when no user survives grouping (and the active search/org). */
+  emptyMessage?: ReactNode;
 }
 
 export interface OrgPickerProps {

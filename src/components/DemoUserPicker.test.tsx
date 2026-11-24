@@ -195,3 +195,56 @@ describe("DemoUserPicker two-pane mode", () => {
     expect(screen.getByText("Bob Builder")).toBeTruthy();
   });
 });
+
+describe("DemoUserPicker meta and empty states", () => {
+  const emailed: DemoUser[] = [
+    { id: "u-ada", name: "Ada Lovelace", role: "owner", email: "ada@acme.dev" },
+    { id: "u-alan", name: "Alan Turing", role: "creator" },
+  ];
+
+  it("shows the role label by default", () => {
+    render(<DemoUserPicker users={emailed} groups={groups} onPick={vi.fn()} />);
+
+    expect(screen.getByText("owner")).toBeTruthy();
+    expect(screen.queryByText("ada@acme.dev")).toBeNull();
+  });
+
+  it("shows the email when metaFrom is email, falling back to the role", () => {
+    render(
+      <DemoUserPicker
+        users={emailed}
+        groups={groups}
+        onPick={vi.fn()}
+        metaFrom="email"
+      />,
+    );
+
+    expect(screen.getByText("ada@acme.dev")).toBeTruthy();
+    expect(screen.getByText("creator")).toBeTruthy();
+    expect(screen.queryByText("owner")).toBeNull();
+  });
+
+  it("renders the empty message when nothing survives filtering", () => {
+    render(
+      <DemoUserPicker
+        users={emailed}
+        groups={groups}
+        onPick={vi.fn()}
+        searchable
+        emptyMessage="No console accounts found"
+      />,
+    );
+
+    fireEvent.change(screen.getByPlaceholderText("Search users…"), {
+      target: { value: "zzz-no-match" },
+    });
+
+    expect(screen.getByText("No console accounts found")).toBeTruthy();
+  });
+
+  it("renders nothing extra when the list is empty without a message", () => {
+    render(<DemoUserPicker users={[]} groups={groups} onPick={vi.fn()} />);
+
+    expect(screen.queryByRole("button")).toBeNull();
+  });
+});

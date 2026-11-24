@@ -14,6 +14,8 @@ export const DemoUserPicker = ({
   searchPlaceholder = "Search users…",
   orgs,
   onPickPair,
+  metaFrom = "role",
+  emptyMessage,
 }: DemoUserPickerProps) => {
   const [query, setQuery] = useState("");
   const [activeOrgId, setActiveOrgId] = useState<string | null>(null);
@@ -89,26 +91,33 @@ export const DemoUserPicker = ({
         <section key={group.id} className="uauth-demo-section">
           <h2 className="uauth-demo-title">{group.title}</h2>
           <div className="uauth-demo-users">
-            {group.users.map((user) => (
-              <Button
-                key={user.id}
-                type="button"
-                variant="secondary"
-                className="uauth-demo-user"
-                onClick={() => pickUser(user)}
-              >
-                <Avatar name={user.name} size="sm" />
-                <span className="uauth-demo-user-text">
-                  <b className="uauth-demo-user-name">{user.name}</b>
-                  <span className="uauth-demo-user-meta">
-                    {group.roleLabels?.[user.role] ?? user.role}
+            {group.users.map((user) => {
+              const roleLabel = group.roleLabels?.[user.role] ?? user.role;
+              const meta =
+                metaFrom === "email" ? (user.email ?? roleLabel) : roleLabel;
+              return (
+                <Button
+                  key={user.id}
+                  type="button"
+                  variant="secondary"
+                  className="uauth-demo-user"
+                  onClick={() => pickUser(user)}
+                >
+                  <Avatar name={user.name} size="sm" />
+                  <span className="uauth-demo-user-text">
+                    <b className="uauth-demo-user-name">{user.name}</b>
+                    <span className="uauth-demo-user-meta">{meta}</span>
                   </span>
-                </span>
-              </Button>
-            ))}
+                </Button>
+              );
+            })}
           </div>
         </section>
       ))}
+
+      {visible.length === 0 && emptyMessage != null && (
+        <div className="uauth-demo-empty">{emptyMessage}</div>
+      )}
     </>
   );
 };
