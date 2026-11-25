@@ -26,3 +26,6 @@ export {
   type AuthBrandNote,
 } from "./AuthBrandPanel";
 export { TurnstileWidget, type TurnstileWidgetProps } from "./shared/TurnstileWidget";
+export { RequireAuth, type RequireAuthProps } from "./RequireAuth";
+export { RestrictedNotice, type RestrictedNoticeProps } from "./RestrictedNotice";
+export { AuthGate, type AuthGateProps } from "./AuthGate";

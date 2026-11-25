@@ -1,4 +1,3 @@
-
 import {
   createContext,
   useCallback,
@@ -18,30 +17,34 @@ import type {
   Tenant,
 } from "./types";
 
-export interface SessionProviderProps {
-  adapter: AuthAdapter;
+export interface SessionProviderProps<U extends SessionUser = SessionUser, T extends Tenant = Tenant> {
+  adapter: AuthAdapter<U, T>;
   children: ReactNode;
 }
 
-interface SessionContextValue {
-  user: SessionUser | null;
-  tenants: Tenant[];
-  activeTenant: Tenant | null;
+export interface SessionContextValue<U extends SessionUser = SessionUser, T extends Tenant = Tenant> {
+  user: U | null;
+  tenants: T[];
+  activeTenant: T | null;
   status: SessionStatus;
-  login: (credentials: LoginCredentials) => Promise<SessionUser>;
+  ready: boolean;
+  login: (credentials: LoginCredentials) => Promise<U>;
   logout: () => Promise<void>;
-  demoLogin: (userId: string) => Promise<SessionUser>;
+  demoLogin: (userId: string) => Promise<U>;
   requestMagicLink: (email: string) => Promise<MagicLinkResult>;
-  verifyToken: (token: string) => Promise<SessionUser>;
+  verifyToken: (token: string) => Promise<U>;
   listDemoUsers: () => Promise<DemoUser[]>;
   switchTenant: (tenantId: string) => void;
 }
 
-const SessionContext = createContext<SessionContextValue | null>(null);
+const SessionContext = createContext<SessionContextValue<any, any> | null>(null);
 
-export const SessionProvider = ({ adapter, children }: SessionProviderProps) => {
-  const [user, setUser] = useState<SessionUser | null>(null);
-  const [tenants, setTenants] = useState<Tenant[]>([]);
+export const SessionProvider = <U extends SessionUser = SessionUser, T extends Tenant = Tenant>({
+  adapter,
+  children,
+}: SessionProviderProps<U, T>) => {
+  const [user, setUser] = useState<U | null>(null);
+  const [tenants, setTenants] = useState<T[]>([]);
   const [activeTenantId, setActiveTenantId] = useState<string | null>(null);
   const [status, setStatus] = useState<SessionStatus>("loading");
 
@@ -149,12 +152,13 @@ export const SessionProvider = ({ adapter, children }: SessionProviderProps) => 
     return adapter.listDemoUsers();
   }, [adapter]);
 
-  const value = useMemo<SessionContextValue>(
+  const value = useMemo<SessionContextValue<U, T>>(
     () => ({
       user,
       tenants,
       activeTenant: tenants.find((tenant) => tenant.id === activeTenantId) ?? null,
       status,
+      ready: status !== "loading",
       login,
       logout,
       demoLogin,
@@ -183,10 +187,10 @@ export const SessionProvider = ({ adapter, children }: SessionProviderProps) => 
   );
 };
 
-export const useSession = (): SessionContextValue => {
+export const useSession = <U extends SessionUser = SessionUser, T extends Tenant = Tenant>(): SessionContextValue<U, T> => {
   const context = useContext(SessionContext);
   if (!context) {
     throw new Error("useSession requires a <SessionProvider> ancestor");
   }
-  return context;
+  return context as unknown as SessionContextValue<U, T>;
 };

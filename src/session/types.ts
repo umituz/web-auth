@@ -1,3 +1,6 @@
+import type { LoginCredentials } from "../types/auth";
+
+export type { LoginCredentials };
 
 export interface SessionUser {
   id: string;
@@ -5,6 +8,7 @@ export interface SessionUser {
   email: string;
   role: string;
   avatarUrl?: string;
+  [key: string]: unknown;
 }
 
 export interface Tenant {
@@ -12,6 +16,7 @@ export interface Tenant {
   name: string;
   initials?: string;
   plan?: string;
+  [key: string]: unknown;
 }
 
 export interface DemoUser {
@@ -27,18 +32,14 @@ export interface MagicLinkResult {
   link?: string;
 }
 
-import type { LoginCredentials } from "../types/auth";
-
-export type { LoginCredentials };
-
-export interface AuthAdapter {
-  login(credentials: LoginCredentials): Promise<SessionUser>;
+export interface AuthAdapter<U extends SessionUser = SessionUser, T extends Tenant = Tenant> {
+  login(credentials: LoginCredentials): Promise<U>;
   logout(): Promise<void>;
-  current(): Promise<SessionUser | null>;
-  listTenants?(userId: string): Promise<Tenant[]>;
-  demoLogin?(userId: string): Promise<SessionUser>;
+  current(): Promise<U | null>;
+  listTenants?(userId: string): Promise<T[]>;
+  demoLogin?(userId: string): Promise<U>;
   requestMagicLink?(email: string): Promise<MagicLinkResult>;
-  verifyToken?(token: string): Promise<SessionUser>;
+  verifyToken?(token: string): Promise<U>;
   listDemoUsers?(): Promise<DemoUser[]>;
 }
 

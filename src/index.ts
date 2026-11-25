@@ -38,6 +38,12 @@ export {
   type AuthBrandPanelProps,
   type AuthBrandStat,
   type AuthBrandNote,
+  RequireAuth,
+  type RequireAuthProps,
+  RestrictedNotice,
+  type RestrictedNoticeProps,
+  AuthGate,
+  type AuthGateProps,
 } from "./components";
 
 export { useAuth, type AuthProvider } from "./hooks";
@@ -111,7 +117,13 @@ export {
   type CookiePreferences,
 } from "./utils";
 
-export type { DemoUser, Tenant } from "./session";
+export type { DemoUser, Tenant, SessionUser, AuthAdapter, SessionStatus } from "./session";
+export {
+  SessionProvider,
+  useSession,
+  type SessionProviderProps,
+  type SessionContextValue,
+} from "./session";
 
 export type {
   LoginCredentials,

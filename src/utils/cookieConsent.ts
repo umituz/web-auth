@@ -65,9 +65,7 @@ export function saveCookiePreferences(
   if (store) {
     try {
       store.setItem(storageKey, JSON.stringify(result));
-    } catch {
-      // storage unavailable
-    }
+    } catch {}
   }
   return result;
 }
