@@ -6,6 +6,7 @@ export interface PrivacyPageProps {
   brandName: string;
   config?: Partial<AuthConfig>;
   contactEmail?: string;
+  description?: string;
   termsVersion?: string;
   sections?: LegalSection[];
   translate?: Translate;
@@ -15,6 +16,7 @@ export function PrivacyPage({
   brandName,
   config,
   contactEmail = 'privacy@example.com',
+  description,
   termsVersion = DEFAULT_TERMS_VERSION,
   sections,
   translate,
@@ -52,7 +54,7 @@ export function PrivacyPage({
 
   const doc: LegalDoc = {
     title: 'Privacy Policy',
-    intro: `How ${brandName} collects, protects, and handles organization and account data.`,
+    intro: description ?? `How ${brandName} collects, protects, and handles organization and account data.`,
     sections: sections ?? defaultSections,
     updated: `Last updated: ${termsVersion}`,
   };

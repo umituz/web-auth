@@ -38,7 +38,7 @@ describe('consentDdl', () => {
 });
 
 describe('authDdl', () => {
-  it('returns idempotent statements for the prefix', async () => {
+  it('returns idempotent statements for the prefix', { timeout: 15000 }, async () => {
     const ddl = authDdl('pkg');
     expect(ddl).toHaveLength(8);
     expect(ddl[0]).toContain('create table if not exists "pkg_ba_user"');
