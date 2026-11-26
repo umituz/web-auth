@@ -6,6 +6,8 @@ export interface RestrictedNoticeProps {
   permission?: string;
   requiredRole?: string;
   icon?: ReactNode;
+  actionLabel?: string;
+  onAction?: () => void;
   className?: string;
 }
 
@@ -15,6 +17,8 @@ export function RestrictedNotice({
   permission,
   requiredRole,
   icon = "⌀",
+  actionLabel,
+  onAction,
   className,
 }: RestrictedNoticeProps) {
   const rootClass = className ? `uauth-restricted ${className}` : "uauth-restricted";
@@ -41,6 +45,11 @@ export function RestrictedNotice({
             )
           )}
         </p>
+        {actionLabel && onAction ? (
+          <button type="button" className="uauth-restricted-action" onClick={onAction}>
+            {actionLabel}
+          </button>
+        ) : null}
       </div>
     </div>
   );

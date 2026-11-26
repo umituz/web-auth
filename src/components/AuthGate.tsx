@@ -10,6 +10,8 @@ export interface AuthGateProps {
   fallback?: ReactNode;
   title?: ReactNode;
   description?: ReactNode;
+  actionLabel?: string;
+  onAction?: () => void;
 }
 
 export function AuthGate({
@@ -21,6 +23,8 @@ export function AuthGate({
   fallback,
   title,
   description,
+  actionLabel,
+  onAction,
 }: AuthGateProps) {
   let isAllowed = allowed;
   if (isAllowed === undefined && requiredRole && userRole) {
@@ -40,6 +44,8 @@ export function AuthGate({
             description={description}
             permission={permission}
             requiredRole={typeof requiredRole === "string" ? requiredRole : undefined}
+            actionLabel={actionLabel}
+            onAction={onAction}
           />
         )}
       </>

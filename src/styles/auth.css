@@ -1276,3 +1276,29 @@
   color: var(--color-muted-foreground);
   line-height: 1.5;
 }
+
+.uauth-restricted-action {
+  margin-top: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border: 0;
+  border-radius: var(--uauth-radius-md, 10px);
+  background: var(--color-primary);
+  color: var(--color-primary-foreground, #fff);
+  font-size: var(--uauth-font-size-sm);
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.uauth-restricted-action:hover {
+  filter: brightness(0.94);
+}
+
+.uauth-restricted-action:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}

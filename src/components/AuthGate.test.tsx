@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { AuthGate } from "./AuthGate";
 
 describe("AuthGate", () => {
@@ -47,6 +47,18 @@ describe("AuthGate", () => {
       </AuthGate>,
     );
     expect(screen.getByText("Custom Access Denied")).toBeTruthy();
+    expect(screen.queryByText("Secret Content")).toBeNull();
+  });
+
+  it("passes actionLabel and onAction through to the default notice", () => {
+    const onAction = vi.fn();
+    render(
+      <AuthGate allowed={false} actionLabel="Return home" onAction={onAction}>
+        <div>Secret Content</div>
+      </AuthGate>,
+    );
+    fireEvent.click(screen.getByText("Return home"));
+    expect(onAction).toHaveBeenCalledTimes(1);
     expect(screen.queryByText("Secret Content")).toBeNull();
   });
 });
