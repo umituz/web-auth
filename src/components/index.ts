@@ -29,3 +29,5 @@ export { TurnstileWidget, type TurnstileWidgetProps } from "./shared/TurnstileWi
 export { RequireAuth, type RequireAuthProps } from "./RequireAuth";
 export { RestrictedNotice, type RestrictedNoticeProps } from "./RestrictedNotice";
 export { AuthGate, type AuthGateProps } from "./AuthGate";
+export { TermsPage, type TermsPageProps } from "./TermsPage";
+export { PrivacyPage, type PrivacyPageProps } from "./PrivacyPage";

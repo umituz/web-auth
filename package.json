@@ -1,6 +1,6 @@
 {
   "name": "@umituz/web-auth",
-  "version": "3.13.0",
+  "version": "3.14.0",
   "description": "Auth module for the fleet — client: AuthLayout, Login/Register/Forgot/Reset forms, LegalPage shell for terms/privacy docs (content stays in the app), SessionProvider with an AuthAdapter seam, org switcher, demo login, ready-made better-auth client adapter + form actions; uauth-* stylesheet on design-system tokens; server (./server): better-auth tables/getter/mount, consent + sessions routes, session helpers",
   "type": "module",
   "main": "./src/index.ts",
@@ -18,6 +18,7 @@
     "./consent": "./src/consent/index.ts",
     "./server": "./src/server/index.ts",
     "./better-auth": "./src/better-auth/index.ts",
+    "./legal": "./src/legal/index.ts",
     "./styles.css": "./src/styles/auth.css",
     "./package.json": "./package.json"
   },

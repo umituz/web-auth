@@ -44,6 +44,10 @@ export {
   type RestrictedNoticeProps,
   AuthGate,
   type AuthGateProps,
+  TermsPage,
+  type TermsPageProps,
+  PrivacyPage,
+  type PrivacyPageProps,
 } from "./components";
 
 export { useAuth, type AuthProvider } from "./hooks";
